@@ -1,6 +1,4 @@
 ---
-import { profile } from '../data/profile';
-
 const currentPath = Astro.url.pathname;
 const navItems = [
   { label: 'Projects', href: '/projects/' },
@@ -22,7 +20,6 @@ const isActive = (href: string) =>
           {item.label}
         </a>
       ))}
-      <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
     </nav>
   </div>
 </header>
