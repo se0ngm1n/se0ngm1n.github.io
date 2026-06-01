@@ -101,6 +101,14 @@ const roleLines = profile.role.split(' · ');
         </nav>
       </div>
     </section>
+
+    <footer class="home-footer" aria-label="Homepage footer">
+      <p>© 2025 se0ngm1n. 일부 권리 보유.</p>
+      <p class="home-footer__quote">
+        <span>생각하는대로 살지 않으면 사는대로 살게 된다.</span>
+        <span>071128</span>
+      </p>
+    </footer>
   </main>
 </BaseLayout>
 
@@ -109,7 +117,9 @@ const roleLines = profile.role.split(' · ');
     min-height: calc(100vh - 64px);
     padding: clamp(18px, 3vw, 36px) 0 clamp(28px, 5vw, 58px);
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
   }
 
   .cv-grid {
@@ -274,6 +284,24 @@ const roleLines = profile.role.split(' · ');
     font-weight: 800;
   }
 
+  .home-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    color: var(--soft);
+    font-size: 0.74rem;
+    line-height: 1.45;
+  }
+
+  .home-footer__quote {
+    display: grid;
+    gap: 2px;
+    text-align: right;
+    word-break: keep-all;
+  }
+
   @media (max-width: 900px) {
     .cv-shell {
       display: block;
@@ -289,6 +317,10 @@ const roleLines = profile.role.split(' · ');
     .portrait {
       width: 132px;
     }
+
+    .home-footer {
+      margin-top: 24px;
+    }
   }
 
   @media (max-width: 540px) {
@@ -296,6 +328,16 @@ const roleLines = profile.role.split(' · ');
     .info-section,
     .nav-card {
       padding: 18px;
+    }
+
+    .home-footer {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .home-footer__quote {
+      text-align: left;
     }
   }
 </style>
