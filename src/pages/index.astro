@@ -1,4 +1,6 @@
 ---
+import studyData from '../data/study-posts.json';
+
 const projects = [
   {
     title: 'DropShield',
@@ -50,6 +52,40 @@ const skills = [
   'CAD',
   'Git',
 ];
+
+const studyPosts = studyData.posts;
+const latestStudyPosts = studyPosts.slice(0, 4);
+const formatStudyDate = (date) => date.replaceAll('-', '.');
+const getStudyCount = (categories) =>
+  studyPosts.filter((post) =>
+    categories.every((category) => post.categories.includes(category)),
+  ).length;
+const studySeries = [
+  {
+    title: 'Unitree Go2 Sim2Real',
+    category: 'Quadruped · Deployment',
+    href: '/study/#unitree-sim2real',
+    count: getStudyCount(['Unitree', 'Sim2Real']),
+    description:
+      'Unitree Go2 실로봇 보행, reward 수정, torque 실험, thermal-aware 데이터 수집까지 이어지는 Sim2Real 기록입니다.',
+  },
+  {
+    title: 'Isaac Lab & Isaac Sim',
+    category: 'Simulation · ROS2',
+    href: '/study/#isaac',
+    count: studyPosts.filter((post) => post.categories.includes('Isaac')).length,
+    description:
+      'Isaac Lab 환경 구성, RL policy 학습, Isaac Sim ROS2 센서/제어 튜토리얼을 정리한 실습 노트입니다.',
+  },
+  {
+    title: 'Reinforcement Learning',
+    category: 'RL · Study',
+    href: '/study/#rl-study',
+    count: getStudyCount(['RL', 'Study']),
+    description:
+      'MDP, Bellman Equation, DP, RL, DRL, Policy Gradient로 이어지는 강화학습 이론 스터디입니다.',
+  },
+];
 ---
 
 <!doctype html>
@@ -71,6 +107,7 @@ const skills = [
 
         <nav>
           <a href="#projects">Projects</a>
+          <a href="#study">Study</a>
           <a href="#about">About</a>
           <a href="#skills">Skills</a>
           <a href="https://github.com/se0ngm1n" target="_blank" rel="noopener noreferrer">
@@ -98,6 +135,7 @@ const skills = [
 
           <div class="buttons">
             <a class="primary" href="#projects">프로젝트 보기</a>
+            <a class="secondary" href="/study/">스터디 글 보기</a>
             <a
               class="secondary"
               href="https://github.com/se0ngm1n"
@@ -166,6 +204,53 @@ const skills = [
                 <p class="coming-soon">상세 페이지 준비 중 →</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="study" class="study-section">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="label">TECHNICAL NOTES</p>
+              <h2>Study</h2>
+            </div>
+            <p class="section-description">
+              팀 프로젝트 과정에서 정리된 로보틱스, Sim2Real, 강화학습 학습 기록입니다.
+            </p>
+          </div>
+
+          <div class="study-layout">
+            <div class="study-series-grid">
+              {studySeries.map((series) => (
+                <a class="study-card" href={series.href}>
+                  <div class="project-meta">
+                    <span>{series.category}</span>
+                    <time>{series.count} posts</time>
+                  </div>
+                  <h3>{series.title}</h3>
+                  <p>{series.description}</p>
+                  <span class="study-link">글 모아보기 →</span>
+                </a>
+              ))}
+            </div>
+
+            <aside class="study-latest" aria-label="최근 스터디 글">
+              <div class="study-latest-head">
+                <h3>Latest Posts</h3>
+                <a href="/study/">전체 보기</a>
+              </div>
+
+              <div class="study-post-list">
+                {latestStudyPosts.map((post) => (
+                  <a class="study-post-row" href={`/study/#${post.slug}`}>
+                    <span>{formatStudyDate(post.date)}</span>
+                    <strong>{post.title}</strong>
+                    <p>{post.summary}</p>
+                  </a>
+                ))}
+              </div>
+            </aside>
           </div>
         </div>
       </section>
@@ -417,6 +502,11 @@ const skills = [
     background: #0f141d;
   }
 
+  .study-section {
+    padding: 96px 0;
+    background: #0c1017;
+  }
+
   .section-title {
     display: flex;
     justify-content: space-between;
@@ -512,6 +602,116 @@ const skills = [
     font-size: 0.87rem;
   }
 
+  .study-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) 420px;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .study-series-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .study-card {
+    min-height: 248px;
+    padding: 28px;
+    border-radius: 22px;
+    background: #151c27;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: 0.18s ease;
+  }
+
+  .study-card:first-child {
+    grid-column: span 2;
+  }
+
+  .study-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(85, 198, 255, 0.34);
+  }
+
+  .study-card h3 {
+    font-size: 1.35rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+  }
+
+  .study-card p {
+    color: #aeb8c8;
+    font-size: 0.94rem;
+    word-break: keep-all;
+  }
+
+  .study-link {
+    display: inline-block;
+    margin-top: 24px;
+    color: #55c6ff;
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+
+  .study-latest {
+    padding: 28px;
+    border-radius: 22px;
+    background: #111822;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .study-latest-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+
+  .study-latest-head h3 {
+    font-size: 1.12rem;
+    letter-spacing: -0.02em;
+  }
+
+  .study-latest-head a {
+    color: #55c6ff;
+    font-size: 0.88rem;
+    font-weight: 650;
+  }
+
+  .study-post-list {
+    display: grid;
+  }
+
+  .study-post-row {
+    display: grid;
+    gap: 5px;
+    padding: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .study-post-row span {
+    color: #55c6ff;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .study-post-row strong {
+    color: #f4f7fb;
+    font-size: 0.98rem;
+    line-height: 1.35;
+  }
+
+  .study-post-row p {
+    color: #94a0b1;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .about-section {
     padding: 108px 0;
   }
@@ -584,7 +784,8 @@ const skills = [
 
   @media (max-width: 920px) {
     .hero,
-    .about-grid {
+    .about-grid,
+    .study-layout {
       grid-template-columns: 1fr;
     }
 
@@ -635,6 +836,14 @@ const skills = [
     .section-description {
       margin-top: 14px;
       text-align: left;
+    }
+
+    .study-series-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .study-card:first-child {
+      grid-column: span 1;
     }
 
     .footer-inner a {
