@@ -1,0 +1,151 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import studyData from '../../data/study-posts.json';
+
+type DateLike = string | Date;
+
+const toDateKey = (date: DateLike) =>
+  date instanceof Date ? date.toISOString().slice(0, 10) : date;
+
+const formatDate = (date: DateLike) => toDateKey(date).replaceAll('-', '.');
+export async function getStaticPaths() {
+  const studyContentModules = import.meta.glob('../../content/study/**/*.md');
+  const collectionPosts =
+    Object.keys(studyContentModules).length > 0 ? await getCollection('study') : [];
+  const pathMap = new Map<string, unknown>();
+
+  for (const post of studyData.posts) {
+    pathMap.set(post.slug, {
+      params: { slug: post.slug },
+      props: { kind: 'legacy', post },
+    });
+  }
+
+  for (const entry of collectionPosts) {
+    pathMap.set(entry.id, {
+      params: { slug: entry.id },
+      props: { kind: 'collection', entry },
+    });
+  }
+
+  return Array.from(pathMap.values());
+}
+
+const props = Astro.props;
+const isCollectionPost = props.kind === 'collection';
+
+let Content;
+const post = isCollectionPost
+  ? {
+      title: props.entry.data.title,
+      date: props.entry.data.date,
+      category: props.entry.data.category,
+      summary: props.entry.data.summary,
+      tags: props.entry.data.tags,
+      contentHtml: '',
+    }
+  : {
+      title: props.post.title,
+      date: props.post.date,
+      category: props.post.categories.join(' · '),
+      summary: props.post.summary,
+      tags: props.post.tags,
+      contentHtml: props.post.contentHtml,
+    };
+
+if (isCollectionPost) {
+  const rendered = await render(props.entry);
+  Content = rendered.Content;
+}
+---
+
+<BaseLayout title={`${post.title} | Study`} description={post.summary}>
+  <main class="page-shell">
+    <a class="back-link" href="/study/">Study</a>
+
+    <article class="detail-card">
+      <header class="detail-header">
+        <div class="archive-meta">
+          <time datetime={toDateKey(post.date)}>{formatDate(post.date)}</time>
+          <strong>{post.category}</strong>
+        </div>
+        <h1 class="page-title">{post.title}</h1>
+        <p class="lead">{post.summary}</p>
+        <div class="tag-list" aria-label="Tags">
+          {post.tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+      </header>
+
+      <div class="detail-content study-content">
+        {isCollectionPost && Content ? <Content /> : <div set:html={post.contentHtml} />}
+      </div>
+    </article>
+  </main>
+
+  <script is:inline>
+    window.MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'],
+          ['\\(', '\\)'],
+        ],
+      },
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-flex;
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .back-link:hover {
+    color: var(--accent-2);
+  }
+
+  .detail-header {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+
+  .lead {
+    max-width: 760px;
+    color: var(--muted);
+    font-size: 1.02rem;
+    word-break: keep-all;
+  }
+
+  .study-content :global(.text-center) {
+    text-align: center;
+  }
+
+  .study-content :global(.highlighter-rouge) {
+    margin-top: 14px;
+  }
+
+  .study-content :global(.code-header) {
+    display: none;
+  }
+
+  .study-content :global(.rouge-table) {
+    margin-top: 0;
+  }
+
+  .study-content :global(.rouge-table td) {
+    border: 0;
+    min-width: auto;
+    vertical-align: top;
+  }
+
+  .study-content :global(.rouge-gutter) {
+    width: 1%;
+    color: var(--soft);
+    user-select: none;
+  }
+</style>

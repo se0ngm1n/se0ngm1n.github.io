@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Projects | 이성민"
+  description="이성민의 로보틱스, AI, 임베디드 시스템 프로젝트 목록"
+>
+  <main class="page-shell">
+    <p class="page-kicker">Selected Work</p>
+    <h1 class="page-title">Projects</h1>
+    <p class="page-intro">
+      로보틱스, 물리 AI, 임베디드 시스템, 프로토타입 개발을 중심으로 진행한
+      프로젝트 기록입니다.
+    </p>
+
+    <section class="archive-grid" aria-label="Project list">
+      {projects.map((project) => (
+        <a class="archive-card project-card" href={`/projects/${project.id}/`}>
+          <div class="archive-meta">
+            <strong>{project.data.period}</strong>
+            <span>{project.data.category}</span>
+          </div>
+
+          <div>
+            <h2>{project.data.subtitle ?? project.data.title}</h2>
+            <p class="project-title-ko">{project.data.title}</p>
+          </div>
+
+          <p>{project.data.summary}</p>
+
+          <div class="tag-list" aria-label="Technologies">
+            {project.data.technologies.map((tech) => <span class="tag">{tech}</span>)}
+          </div>
+
+          {project.data.outcomes.length > 0 && (
+            <ul class="outcome-list" aria-label="Outcomes">
+              {project.data.outcomes.map((outcome) => <li>{outcome}</li>)}
+            </ul>
+          )}
+
+          <span class="read-more">Detail</span>
+        </a>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .project-card {
+    grid-template-columns: 1fr;
+  }
+
+  .project-title-ko {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.92rem;
+    word-break: keep-all;
+  }
+
+  .outcome-list {
+    display: grid;
+    gap: 5px;
+    padding-left: 18px;
+    color: #c8d2df;
+    font-size: 0.88rem;
+    word-break: keep-all;
+  }
+
+  .read-more {
+    color: var(--accent-2);
+    font-size: 0.88rem;
+    font-weight: 800;
+  }
+</style>

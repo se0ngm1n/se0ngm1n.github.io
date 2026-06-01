@@ -1,0 +1,28 @@
+---
+import { profile } from '../data/profile';
+
+const currentPath = Astro.url.pathname;
+const navItems = [
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Study', href: '/study/' },
+  { label: 'Life', href: '/life/' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-logo" href="/" aria-label="Go to homepage">SE0NGM1N.</a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      {navItems.map((item) => (
+        <a href={item.href} class:list={{ active: isActive(item.href) }}>
+          {item.label}
+        </a>
+      ))}
+      <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</header>

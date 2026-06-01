@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import studyData from '../../data/study-posts.json';
+
+type DateLike = string | Date;
+type StudyListPost = {
+  slug: string;
+  title: string;
+  date: DateLike;
+  category: string;
+  summary: string;
+  tags: string[];
+};
+
+const toDateKey = (date: DateLike) =>
+  date instanceof Date ? date.toISOString().slice(0, 10) : date;
+
+const formatDate = (date: DateLike) => toDateKey(date).replaceAll('-', '.');
+const studyContentModules = import.meta.glob('../../content/study/**/*.md');
+
+const legacyPosts = studyData.posts.map((post) => ({
+  slug: post.slug,
+  title: post.title,
+  date: post.date,
+  category: post.categories.join(' · '),
+  summary: post.summary,
+  tags: post.tags,
+}));
+
+const collectionEntries =
+  Object.keys(studyContentModules).length > 0 ? await getCollection('study') : [];
+
+const collectionPosts = collectionEntries.map((post) => ({
+  slug: post.id,
+  title: post.data.title,
+  date: post.data.date,
+  category: post.data.category,
+  summary: post.data.summary,
+  tags: post.data.tags,
+}));
+
+const postMap = new Map<string, StudyListPost>();
+for (const post of legacyPosts) postMap.set(post.slug, post);
+for (const post of collectionPosts) postMap.set(post.slug, post);
+
+const posts = Array.from(postMap.values()).sort(
+  (a, b) => toDateKey(b.date).localeCompare(toDateKey(a.date)),
+);
+---
+
+<BaseLayout
+  title="Study | 이성민"
+  description="로보틱스, 시뮬레이션, 강화학습, 로봇 제어 기술 노트"
+>
+  <main class="page-shell">
+    <p class="page-kicker">Technical Notes</p>
+    <h1 class="page-title">Study</h1>
+    <p class="page-intro">
+      시뮬레이션, 강화학습, 로봇 제어, 개발 환경 구축 과정에서 정리한 기술
+      노트입니다.
+    </p>
+
+    {posts.length > 0 ? (
+      <section class="archive-grid" aria-label="Study posts">
+        {posts.map((post) => (
+          <a class="archive-card" href={`/study/${post.slug}/`}>
+            <div class="archive-meta">
+              <time datetime={toDateKey(post.date)}>{formatDate(post.date)}</time>
+              <strong>{post.category}</strong>
+            </div>
+            <h2>{post.title}</h2>
+            <p>{post.summary}</p>
+            <div class="tag-list" aria-label="Tags">
+              {post.tags.map((tag) => <span class="tag">{tag}</span>)}
+            </div>
+            <span class="read-more">Read post</span>
+          </a>
+        ))}
+      </section>
+    ) : (
+      <div class="empty-state">
+        아직 게시물이 없습니다. Markdown 파일을 추가하면 이 페이지에 자동으로 표시됩니다.
+      </div>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .read-more {
+    color: var(--accent-2);
+    font-size: 0.88rem;
+    font-weight: 800;
+  }
+</style>

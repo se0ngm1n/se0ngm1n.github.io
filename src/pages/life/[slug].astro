@@ -1,0 +1,121 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const lifeContentModules = import.meta.glob('../../content/life/**/*.md');
+  const posts =
+    Object.keys(lifeContentModules).length > 0 ? await getCollection('life') : [];
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const toDateKey = (date: string | Date) =>
+  date instanceof Date ? date.toISOString().slice(0, 10) : date;
+
+const formatDate = (date: string | Date) => toDateKey(date).replaceAll('-', '.');
+---
+
+<BaseLayout title={`${post.data.title} | Life`} description={post.data.summary ?? post.data.title}>
+  <main class="page-shell life-page">
+    <a class="back-link" href="/life/">Life</a>
+
+    <article class="detail-card">
+      <header class="detail-header">
+        <div class="archive-meta">
+          <time datetime={toDateKey(post.data.date)}>{formatDate(post.data.date)}</time>
+          <strong>{post.data.category}</strong>
+        </div>
+        <h1 class="page-title">{post.data.title}</h1>
+        {post.data.summary && <p class="lead">{post.data.summary}</p>}
+      </header>
+
+      {post.data.cover && (
+        <figure class="cover-figure">
+          <img src={post.data.cover} alt="" />
+        </figure>
+      )}
+
+      {post.data.gallery.length > 0 && (
+        <section class="gallery" aria-label="Photo gallery">
+          {post.data.gallery.map((src) => <img src={src} alt="" loading="lazy" />)}
+        </section>
+      )}
+
+      <div class="detail-content">
+        <Content />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .life-page {
+    --accent: #8ed7bd;
+    --accent-2: #b9ead9;
+  }
+
+  .back-link {
+    display: inline-flex;
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .back-link:hover {
+    color: var(--accent-2);
+  }
+
+  .detail-header {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .lead {
+    max-width: 760px;
+    color: var(--muted);
+    word-break: keep-all;
+  }
+
+  .cover-figure {
+    margin-bottom: 22px;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
+
+  .cover-figure img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .gallery img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

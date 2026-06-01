@@ -1,0 +1,105 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout
+  title={`${project.data.subtitle ?? project.data.title} | Projects`}
+  description={project.data.summary}
+>
+  <main class="page-shell">
+    <a class="back-link" href="/projects/">Projects</a>
+
+    <article class="detail-card">
+      <header class="detail-header">
+        <p class="page-kicker">{project.data.category}</p>
+        <h1 class="page-title">{project.data.subtitle ?? project.data.title}</h1>
+        {project.data.subtitle && <p class="project-title-ko">{project.data.title}</p>}
+        <div class="archive-meta">
+          <strong>{project.data.period}</strong>
+        </div>
+        <p class="lead">{project.data.summary}</p>
+
+        <div class="tag-list" aria-label="Technologies">
+          {project.data.technologies.map((tech) => <span class="tag">{tech}</span>)}
+        </div>
+
+        {project.data.outcomes.length > 0 && (
+          <section class="outcomes" aria-label="Outcomes">
+            <h2>Results</h2>
+            <ul>
+              {project.data.outcomes.map((outcome) => <li>{outcome}</li>)}
+            </ul>
+          </section>
+        )}
+      </header>
+
+      <div class="detail-content">
+        <Content />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-flex;
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .back-link:hover {
+    color: var(--accent-2);
+  }
+
+  .detail-header {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .project-title-ko,
+  .lead {
+    color: var(--muted);
+    word-break: keep-all;
+  }
+
+  .lead {
+    max-width: 760px;
+    font-size: 1.02rem;
+  }
+
+  .outcomes {
+    margin-top: 4px;
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+  }
+
+  .outcomes h2 {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+
+  .outcomes ul {
+    display: grid;
+    gap: 7px;
+    padding-left: 18px;
+    color: #c8d2df;
+    word-break: keep-all;
+  }
+</style>
