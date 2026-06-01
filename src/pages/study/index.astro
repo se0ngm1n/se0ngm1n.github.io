@@ -11,6 +11,10 @@ type StudyListPost = {
   category: string;
   summary: string;
   tags: string[];
+  thumbnail?: {
+    src: string;
+    alt: string;
+  };
 };
 
 const toDateKey = (date: DateLike) =>
@@ -18,6 +22,37 @@ const toDateKey = (date: DateLike) =>
 
 const formatDate = (date: DateLike) => toDateKey(date).replaceAll('-', '.');
 const studyContentModules = import.meta.glob('../../content/study/**/*.md');
+const thumbnailImageIndexes: Record<string, number> = {
+  'unitree-go2-part-0-unitree-ros2-architecture': 1,
+  'isaaclab-part-4-rl-policy-isaac-sim': 2,
+  'isaaclab-part-3-rl-training': 8,
+  'isaaclab-part-2-environment': 1,
+  'isaaclab-part-1-urdf-import': 2,
+  'isaac-sim-ros2-joint-control': 1,
+  'isaac-sim-publish-rate-qos': 2,
+  'isaac-sim-tf-odometry': 1,
+  'isaac-sim-rtx-lidar': 1,
+  'isaac-sim-ros2-cameras': 3,
+  'isaac-sim-turtlebot-ros2': 16,
+};
+
+const getImageAttribute = (tag: string, name: string) => {
+  const match = tag.match(new RegExp(`${name}=["']([^"']+)["']`, 'i'));
+  return match?.[1] ?? '';
+};
+
+const getPostThumbnail = (post: (typeof studyData.posts)[number]) => {
+  const imageTags = Array.from(post.contentHtml.matchAll(/<img\b[^>]*>/gi));
+  const imageIndex = thumbnailImageIndexes[post.slug] ?? 1;
+  const imageTag = imageTags[imageIndex - 1] ?? imageTags[0];
+
+  if (!imageTag) return undefined;
+
+  return {
+    src: getImageAttribute(imageTag[0], 'src'),
+    alt: getImageAttribute(imageTag[0], 'alt') || post.title,
+  };
+};
 
 const legacyPosts = studyData.posts.map((post) => ({
   slug: post.slug,
@@ -26,6 +61,7 @@ const legacyPosts = studyData.posts.map((post) => ({
   category: post.categories.join(' · '),
   summary: post.summary,
   tags: post.tags,
+  thumbnail: getPostThumbnail(post),
 }));
 
 const collectionEntries =
@@ -38,6 +74,12 @@ const collectionPosts = collectionEntries.map((post) => ({
   category: post.data.category,
   summary: post.data.summary,
   tags: post.data.tags,
+  thumbnail: post.data.thumbnail
+    ? {
+        src: post.data.thumbnail,
+        alt: post.data.title,
+      }
+    : undefined,
 }));
 
 const postMap = new Map<string, StudyListPost>();
@@ -64,17 +106,22 @@ const posts = Array.from(postMap.values()).sort(
     {posts.length > 0 ? (
       <section class="archive-grid" aria-label="Study posts">
         {posts.map((post) => (
-          <a class="archive-card" href={`/study/${post.slug}/`}>
-            <div class="archive-meta">
-              <time datetime={toDateKey(post.date)}>{formatDate(post.date)}</time>
-              <strong>{post.category}</strong>
+          <a class:list={['archive-card', 'study-card', { 'study-card--plain': !post.thumbnail }]} href={`/study/${post.slug}/`}>
+            {post.thumbnail && (
+              <img class="study-card__thumbnail" src={post.thumbnail.src} alt={post.thumbnail.alt} loading="lazy" />
+            )}
+            <div class="study-card__body">
+              <div class="archive-meta">
+                <time datetime={toDateKey(post.date)}>{formatDate(post.date)}</time>
+                <strong>{post.category}</strong>
+              </div>
+              <h2>{post.title}</h2>
+              <p>{post.summary}</p>
+              <div class="tag-list" aria-label="Tags">
+                {post.tags.map((tag) => <span class="tag">{tag}</span>)}
+              </div>
+              <span class="read-more">Read post</span>
             </div>
-            <h2>{post.title}</h2>
-            <p>{post.summary}</p>
-            <div class="tag-list" aria-label="Tags">
-              {post.tags.map((tag) => <span class="tag">{tag}</span>)}
-            </div>
-            <span class="read-more">Read post</span>
           </a>
         ))}
       </section>
@@ -87,9 +134,44 @@ const posts = Array.from(postMap.values()).sort(
 </BaseLayout>
 
 <style>
+  .study-card {
+    grid-template-columns: 118px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .study-card--plain {
+    grid-template-columns: 1fr;
+  }
+
+  .study-card__thumbnail {
+    width: 118px;
+    aspect-ratio: 1;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    object-fit: cover;
+    background: #f4f4f4;
+  }
+
+  .study-card__body {
+    min-width: 0;
+    display: grid;
+    gap: 12px;
+  }
+
   .read-more {
     color: var(--accent-2);
     font-size: 0.88rem;
     font-weight: 800;
+  }
+
+  @media (max-width: 640px) {
+    .study-card {
+      grid-template-columns: 88px minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .study-card__thumbnail {
+      width: 88px;
+    }
   }
 </style>

@@ -24,6 +24,7 @@ const study = defineCollection({
     category: z.string(),
     summary: z.string(),
     tags: z.array(z.string()).default([]),
+    thumbnail: z.string().optional(),
   }),
 });
 
