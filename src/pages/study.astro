@@ -71,17 +71,16 @@ const groups = [
 
     <main>
       <section class="study-hero container">
-        <p class="label">CRAWLED TECHNICAL NOTES</p>
+        <p class="label">TECHNICAL NOTES</p>
         <h1>Study Archive</h1>
         <p class="intro">
-          팀 프로젝트 과정에서 정리된 jaehka13 블로그의 글을 가져와 시리즈별로 모았습니다.
-          모든 글은 원문 링크와 CC BY 4.0 출처 표기를 함께 유지합니다.
+          로보틱스, Sim2Real, 강화학습 기록을 시리즈별로 모았습니다.
         </p>
 
         <div class="study-summary" aria-label="스터디 글 통계">
           <span>{posts.length} posts</span>
           <span>{groups.length} series</span>
-          <span>Source: jaehka13 blog</span>
+          <span>Robotics · Sim2Real · RL</span>
         </div>
       </section>
 
@@ -109,14 +108,10 @@ const groups = [
               </div>
 
               <div class="post-stack">
-                {group.posts.map((post, index) => (
+                {group.posts.map((post) => (
                   <article class="study-post" id={post.slug}>
                     <div class="post-header">
-                      {post.image ? (
-                        <img src={post.image} alt="" loading={index < 2 ? 'eager' : 'lazy'} />
-                      ) : (
-                        <div class="post-image-fallback">{post.categories[0]}</div>
-                      )}
+                      <div class="post-image-fallback">{post.categories[0]}</div>
 
                       <div class="post-heading">
                         <div class="post-meta">
@@ -125,12 +120,6 @@ const groups = [
                         </div>
                         <h3>{post.title}</h3>
                         <p>{post.summary}</p>
-                        <div class="post-actions">
-                          <a href={post.sourceUrl} target="_blank" rel="noopener noreferrer">
-                            원문 보기
-                          </a>
-                          <span>{studyData.license}</span>
-                        </div>
                       </div>
                     </div>
 
@@ -149,11 +138,7 @@ const groups = [
 
     <footer class="footer">
       <div class="container footer-inner">
-        <p>
-          Study content sourced from
-          <a href={studyData.source} target="_blank" rel="noopener noreferrer">jaehka13 blog</a>
-          under {studyData.license}.
-        </p>
+        <p>© 2026 Seongmin Lee. All rights reserved.</p>
         <a href="/">Back to portfolio</a>
       </div>
     </footer>
@@ -419,32 +404,6 @@ const groups = [
     color: #aeb8c8;
     font-size: 0.95rem;
     word-break: keep-all;
-  }
-
-  .post-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    margin-top: 24px;
-  }
-
-  .post-actions a,
-  .post-actions span {
-    border-radius: 999px;
-    padding: 7px 12px;
-    font-size: 0.82rem;
-    font-weight: 700;
-  }
-
-  .post-actions a {
-    background: #55c6ff;
-    color: #081019;
-  }
-
-  .post-actions span {
-    background: rgba(255, 255, 255, 0.07);
-    color: #c7d1de;
   }
 
   .post-body {
