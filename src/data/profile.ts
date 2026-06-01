@@ -24,6 +24,10 @@ export const profile = {
     degree: 'B.S. Candidate',
     period: 'Mar. 2021 - Expected Mar. 2027',
   },
+  training: [
+    '2026 H-모빌리티 클래스 로보틱스 Track',
+    '2026 Google AI Professional Certificate',
+  ],
   awards: [
     '제5회 소방안전 빅데이터 플랫폼 활용 및 아이디어 경진대회 입선(장려상)',
     '건국대학교 교내 캡스톤디자인 경진대회 동상(4위)',
