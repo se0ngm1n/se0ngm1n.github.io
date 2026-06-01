@@ -11,7 +11,7 @@ const roleLines = profile.role.split(' · ');
   description="이성민의 개인 포트폴리오 및 온라인 CV"
 >
   <main class="cv-shell">
-    <p class="home-quote">생각하는대로 살지 않으면 사는대로 살게 된다.</p>
+    <p class="home-quote">생각하는대로 살지 않으면 사는대로 생각하게 된다.</p>
 
     <section class="cv-grid" aria-label="Seongmin Lee CV overview">
       <aside class="profile-panel profile-card">
@@ -128,8 +128,9 @@ const roleLines = profile.role.split(' · ');
 
   .home-quote {
     position: absolute;
-    top: 0;
+    top: calc(clamp(18px, 3vw, 36px) / 2);
     right: 0;
+    transform: translateY(-50%);
     color: var(--soft);
     font-size: 0.78rem;
     line-height: 1.5;
@@ -207,7 +208,7 @@ const roleLines = profile.role.split(' · ');
 
   .contact-list dt {
     color: var(--text);
-    font-size: 0.72rem;
+    font-size: 1.12rem;
     font-weight: 800;
     letter-spacing: 0;
     text-transform: uppercase;
@@ -352,6 +353,7 @@ const roleLines = profile.role.split(' · ');
 
     .home-quote {
       position: static;
+      transform: none;
       margin-bottom: 14px;
     }
 
