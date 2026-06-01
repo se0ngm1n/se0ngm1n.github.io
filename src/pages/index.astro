@@ -54,38 +54,8 @@ const skills = [
 ];
 
 const studyPosts = studyData.posts;
-const latestStudyPosts = studyPosts.slice(0, 4);
+const latestStudyPosts = studyPosts.slice(0, 6);
 const formatStudyDate = (date) => date.replaceAll('-', '.');
-const getStudyCount = (categories) =>
-  studyPosts.filter((post) =>
-    categories.every((category) => post.categories.includes(category)),
-  ).length;
-const studySeries = [
-  {
-    title: 'Unitree Go2 Sim2Real',
-    category: 'Quadruped · Deployment',
-    href: '/study/#unitree-sim2real',
-    count: getStudyCount(['Unitree', 'Sim2Real']),
-    description:
-      'Unitree Go2 실로봇 보행, reward 수정, torque 실험, thermal-aware 데이터 수집까지 이어지는 Sim2Real 기록입니다.',
-  },
-  {
-    title: 'Isaac Lab & Isaac Sim',
-    category: 'Simulation · ROS2',
-    href: '/study/#isaac',
-    count: studyPosts.filter((post) => post.categories.includes('Isaac')).length,
-    description:
-      'Isaac Lab 환경 구성, RL policy 학습, Isaac Sim ROS2 센서/제어 튜토리얼을 정리한 실습 노트입니다.',
-  },
-  {
-    title: 'Reinforcement Learning',
-    category: 'RL · Study',
-    href: '/study/#rl-study',
-    count: getStudyCount(['RL', 'Study']),
-    description:
-      'MDP, Bellman Equation, DP, RL, DRL, Policy Gradient로 이어지는 강화학습 이론 스터디입니다.',
-  },
-];
 ---
 
 <!doctype html>
@@ -220,37 +190,21 @@ const studySeries = [
             </p>
           </div>
 
-          <div class="study-layout">
-            <div class="study-series-grid">
-              {studySeries.map((series) => (
-                <a class="study-card" href={series.href}>
-                  <div class="project-meta">
-                    <span>{series.category}</span>
-                    <time>{series.count} posts</time>
-                  </div>
-                  <h3>{series.title}</h3>
-                  <p>{series.description}</p>
-                  <span class="study-link">글 모아보기 →</span>
+          <div class="study-latest study-latest-wide" aria-label="최근 스터디 글">
+            <div class="study-latest-head">
+              <h3>Latest Posts</h3>
+              <a href="/study/">전체 보기</a>
+            </div>
+
+            <div class="study-post-list home-study-posts">
+              {latestStudyPosts.map((post) => (
+                <a class="study-post-row" href={`/study/#${post.slug}`}>
+                  <span>{formatStudyDate(post.date)}</span>
+                  <strong>{post.title}</strong>
+                  <p>{post.summary}</p>
                 </a>
               ))}
             </div>
-
-            <aside class="study-latest" aria-label="최근 스터디 글">
-              <div class="study-latest-head">
-                <h3>Latest Posts</h3>
-                <a href="/study/">전체 보기</a>
-              </div>
-
-              <div class="study-post-list">
-                {latestStudyPosts.map((post) => (
-                  <a class="study-post-row" href={`/study/#${post.slug}`}>
-                    <span>{formatStudyDate(post.date)}</span>
-                    <strong>{post.title}</strong>
-                    <p>{post.summary}</p>
-                  </a>
-                ))}
-              </div>
-            </aside>
           </div>
         </div>
       </section>
@@ -602,62 +556,15 @@ const studySeries = [
     font-size: 0.87rem;
   }
 
-  .study-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) 420px;
-    gap: 28px;
-    align-items: start;
-  }
-
-  .study-series-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-  }
-
-  .study-card {
-    min-height: 248px;
-    padding: 28px;
-    border-radius: 22px;
-    background: #151c27;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: 0.18s ease;
-  }
-
-  .study-card:first-child {
-    grid-column: span 2;
-  }
-
-  .study-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(85, 198, 255, 0.34);
-  }
-
-  .study-card h3 {
-    font-size: 1.35rem;
-    letter-spacing: -0.03em;
-    margin-bottom: 14px;
-  }
-
-  .study-card p {
-    color: #aeb8c8;
-    font-size: 0.94rem;
-    word-break: keep-all;
-  }
-
-  .study-link {
-    display: inline-block;
-    margin-top: 24px;
-    color: #55c6ff;
-    font-size: 0.9rem;
-    font-weight: 650;
-  }
-
   .study-latest {
     padding: 28px;
     border-radius: 22px;
     background: #111822;
     border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .study-latest-wide {
+    width: 100%;
   }
 
   .study-latest-head {
@@ -681,6 +588,11 @@ const studySeries = [
 
   .study-post-list {
     display: grid;
+  }
+
+  .home-study-posts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 30px;
   }
 
   .study-post-row {
@@ -784,8 +696,7 @@ const studySeries = [
 
   @media (max-width: 920px) {
     .hero,
-    .about-grid,
-    .study-layout {
+    .about-grid {
       grid-template-columns: 1fr;
     }
 
@@ -838,12 +749,8 @@ const studySeries = [
       text-align: left;
     }
 
-    .study-series-grid {
+    .home-study-posts {
       grid-template-columns: 1fr;
-    }
-
-    .study-card:first-child {
-      grid-column: span 1;
     }
 
     .footer-inner a {

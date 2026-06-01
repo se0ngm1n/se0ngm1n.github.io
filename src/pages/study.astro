@@ -3,30 +3,6 @@ import studyData from '../data/study-posts.json';
 
 const posts = studyData.posts;
 const formatDate = (date) => date.replaceAll('-', '.');
-const getPosts = (predicate) => posts.filter(predicate);
-const groups = [
-  {
-    id: 'unitree-sim2real',
-    title: 'Unitree Go2 Sim2Real',
-    description:
-      '실제 Go2 보행 deploy, reward 수정, feed-forward torque, thermal-aware 데이터 수집까지 이어지는 실험 기록입니다.',
-    posts: getPosts((post) => post.categories.includes('Unitree')),
-  },
-  {
-    id: 'isaac',
-    title: 'Isaac Lab & Isaac Sim',
-    description:
-      'Isaac Lab 강화학습 환경과 Isaac Sim ROS2 센서/제어 튜토리얼을 묶은 시뮬레이션 스터디입니다.',
-    posts: getPosts((post) => post.categories.includes('Isaac')),
-  },
-  {
-    id: 'rl-study',
-    title: 'Reinforcement Learning',
-    description:
-      'MDP부터 Policy Gradient까지 강화학습의 기본 개념과 알고리즘 흐름을 정리한 이론 스터디입니다.',
-    posts: getPosts((post) => post.categories.includes('RL') && post.categories.includes('Study')),
-  },
-];
 ---
 
 <!doctype html>
@@ -74,64 +50,40 @@ const groups = [
         <p class="label">TECHNICAL NOTES</p>
         <h1>Study Archive</h1>
         <p class="intro">
-          로보틱스, Sim2Real, 강화학습 기록을 시리즈별로 모았습니다.
+          로보틱스, Sim2Real, 강화학습 기록을 포스팅 형태로 모았습니다.
         </p>
 
         <div class="study-summary" aria-label="스터디 글 통계">
           <span>{posts.length} posts</span>
-          <span>{groups.length} series</span>
           <span>Robotics · Sim2Real · RL</span>
-        </div>
-      </section>
-
-      <section class="series-nav">
-        <div class="container series-links">
-          {groups.map((group) => (
-            <a href={`#${group.id}`}>
-              <span>{group.posts.length}</span>
-              {group.title}
-            </a>
-          ))}
         </div>
       </section>
 
       <section class="feed-section">
         <div class="container feed">
-          {groups.map((group) => (
-            <section class="study-group" id={group.id}>
-              <div class="group-head">
-                <div>
-                  <p class="label">SERIES</p>
-                  <h2>{group.title}</h2>
-                </div>
-                <p>{group.description}</p>
-              </div>
+          <div class="post-stack">
+            {posts.map((post) => (
+              <article class="study-post" id={post.slug}>
+                <div class="post-header">
+                  <div class="post-image-fallback">{post.categories[0]}</div>
 
-              <div class="post-stack">
-                {group.posts.map((post) => (
-                  <article class="study-post" id={post.slug}>
-                    <div class="post-header">
-                      <div class="post-image-fallback">{post.categories[0]}</div>
-
-                      <div class="post-heading">
-                        <div class="post-meta">
-                          <time>{formatDate(post.date)}</time>
-                          <span>{post.categories.join(' · ')}</span>
-                        </div>
-                        <h3>{post.title}</h3>
-                        <p>{post.summary}</p>
-                      </div>
+                  <div class="post-heading">
+                    <div class="post-meta">
+                      <time>{formatDate(post.date)}</time>
+                      <span>{post.categories.join(' · ')}</span>
                     </div>
+                    <h3>{post.title}</h3>
+                    <p>{post.summary}</p>
+                  </div>
+                </div>
 
-                    <details class="post-body">
-                      <summary>본문 보기</summary>
-                      <div class="post-content" set:html={post.contentHtml} />
-                    </details>
-                  </article>
-                ))}
-              </div>
-            </section>
-          ))}
+                <details class="post-body">
+                  <summary>본문 보기</summary>
+                  <div class="post-content" set:html={post.contentHtml} />
+                </details>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </main>
@@ -259,46 +211,13 @@ const groups = [
     margin-top: 34px;
   }
 
-  .study-summary span,
-  .series-links a {
+  .study-summary span {
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(85, 198, 255, 0.07);
     color: #c7eaff;
     font-size: 0.86rem;
-  }
-
-  .study-summary span {
     padding: 8px 13px;
-  }
-
-  .series-nav {
-    position: sticky;
-    top: 72px;
-    z-index: 9;
-    background: rgba(15, 20, 29, 0.92);
-    backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .series-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 14px 0;
-  }
-
-  .series-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 13px;
-  }
-
-  .series-links span {
-    color: #55c6ff;
-    font-weight: 800;
   }
 
   .feed-section {
@@ -306,34 +225,10 @@ const groups = [
     background: #0f141d;
   }
 
-  .feed {
-    display: grid;
-    gap: 86px;
-  }
-
-  .study-group {
-    scroll-margin-top: 150px;
-  }
-
-  .group-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 32px;
-    margin-bottom: 28px;
-  }
-
   h2 {
     font-size: clamp(2rem, 3.5vw, 2.8rem);
     letter-spacing: -0.05em;
     line-height: 1.25;
-  }
-
-  .group-head > p {
-    max-width: 430px;
-    color: #98a4b5;
-    text-align: right;
-    word-break: keep-all;
   }
 
   .post-stack {
@@ -595,15 +490,6 @@ const groups = [
       min-height: 0;
     }
 
-    .group-head {
-      display: block;
-    }
-
-    .group-head > p {
-      max-width: none;
-      margin-top: 14px;
-      text-align: left;
-    }
   }
 
   @media (max-width: 640px) {
@@ -625,10 +511,6 @@ const groups = [
 
     h1 {
       font-size: 2.45rem;
-    }
-
-    .series-nav {
-      top: 64px;
     }
 
     .post-heading,
