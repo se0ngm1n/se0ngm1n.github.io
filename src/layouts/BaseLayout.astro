@@ -36,18 +36,18 @@ const {
   }
 
   :root {
-    color-scheme: dark;
-    --bg: #0b0f14;
-    --panel: #121821;
-    --panel-2: #161e29;
-    --line: rgba(255, 255, 255, 0.08);
-    --line-strong: rgba(255, 255, 255, 0.14);
-    --text: #edf2f8;
-    --muted: #a8b2c1;
-    --soft: #7f8ca0;
-    --accent: #62c4ff;
-    --accent-2: #9fd9ff;
-    --success: #89d6b3;
+    color-scheme: light;
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --panel-2: #f4f6f8;
+    --line: #d9dee5;
+    --line-strong: #aab3bf;
+    --text: #111111;
+    --muted: #4b5563;
+    --soft: #6b7280;
+    --accent: #0f6ea8;
+    --accent-2: #074f7d;
+    --success: #257a55;
     --max: 1120px;
   }
 
@@ -85,7 +85,7 @@ const {
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(11, 15, 20, 0.9);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--line);
   }
@@ -185,8 +185,8 @@ const {
     min-height: 26px;
     padding: 4px 9px;
     border-radius: 999px;
-    background: rgba(98, 196, 255, 0.08);
-    color: #cceeff;
+    background: #e8f4fb;
+    color: #111111;
     font-size: 0.78rem;
     line-height: 1.2;
   }
@@ -205,7 +205,7 @@ const {
   }
 
   .button-link:hover {
-    border-color: rgba(98, 196, 255, 0.45);
+    border-color: var(--accent);
     color: var(--accent-2);
   }
 
@@ -226,7 +226,7 @@ const {
 
   .archive-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(98, 196, 255, 0.35);
+    border-color: var(--accent);
   }
 
   .archive-meta {
@@ -261,7 +261,7 @@ const {
   }
 
   .detail-content {
-    color: #c8d2df;
+    color: var(--text);
     word-break: keep-all;
   }
 
@@ -276,7 +276,7 @@ const {
 
   .detail-content p,
   .detail-content li {
-    color: #c8d2df;
+    color: var(--text);
     line-height: 1.78;
   }
 
@@ -313,7 +313,7 @@ const {
     overflow-x: auto;
     padding: 16px;
     border-radius: 8px;
-    background: #080c11;
+    background: #f4f6f8;
     border: 1px solid var(--line);
   }
 
@@ -338,7 +338,7 @@ const {
   }
 
   .detail-content th {
-    background: rgba(255, 255, 255, 0.05);
+    background: #f4f6f8;
     color: var(--text);
   }
 

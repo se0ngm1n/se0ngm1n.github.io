@@ -11,8 +11,8 @@ export const profile = {
   github: 'https://github.com/se0ngm1n',
   portfolio: 'https://se0ngm1n.com',
   image: {
-    src: '/images/profile.png',
-    alt: 'Seongmin Lee profile photo',
+    src: '',
+    alt: '',
   },
   resume: {
     available: false,
@@ -25,10 +25,12 @@ export const profile = {
     period: 'Mar. 2021 - Expected Mar. 2027',
   },
   awards: [
-    '2025 Defense AI Competition, Chief of Naval Operations Award · 3rd Place',
-    '2025 Hanyang University Creative Integrated Design Competition · 2nd Place',
-    '2025 Konkuk University Capstone Design Competition · 4th Place',
-    'Korean Engineering Deans Council Award',
+    '제5회 소방안전 빅데이터 플랫폼 활용 및 아이디어 경진대회 입선(장려상)',
+    '건국대학교 교내 캡스톤디자인 경진대회 동상(4위)',
+    '2025 한양대학교 창의적 종합설계 경진대회 우수상(2위)',
+    '2025 국방 AI 경진대회 해커톤 (2박 3일) 해군 참모 총장상(우수상 3등)',
+    '한국공과대학장협의회 (KEDC) 한국공과대학장협의회장상 수상',
+    'DACON 스마트 창고 출고 지연 예측 AI 경진대회 607팀 중 33등, 상위 5.4%',
   ],
   focusAreas: ['Physical AI', 'Robotics', 'Autonomous Driving'],
   navigationCards: [
