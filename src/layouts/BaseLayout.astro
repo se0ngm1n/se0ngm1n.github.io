@@ -39,15 +39,15 @@ const {
     color-scheme: light;
     --bg: #ffffff;
     --panel: #ffffff;
-    --panel-2: #f4f6f8;
-    --line: #d9dee5;
-    --line-strong: #aab3bf;
+    --panel-2: #f7f7f7;
+    --line: #d8d8d8;
+    --line-strong: #111111;
     --text: #111111;
-    --muted: #4b5563;
-    --soft: #6b7280;
-    --accent: #0f6ea8;
-    --accent-2: #074f7d;
-    --success: #257a55;
+    --muted: #555555;
+    --soft: #777777;
+    --accent: #111111;
+    --accent-2: #111111;
+    --success: #111111;
     --max: 1120px;
   }
 
@@ -61,9 +61,9 @@ const {
     background: var(--bg);
     color: var(--text);
     font-family:
-      Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Helvetica Neue", Arial, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI",
       sans-serif;
-    line-height: 1.55;
+    line-height: 1.5;
   }
 
   a {
@@ -85,8 +85,8 @@ const {
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(18px);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
   }
 
@@ -108,7 +108,7 @@ const {
   .site-logo {
     font-size: 1rem;
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     white-space: nowrap;
   }
 
@@ -139,7 +139,7 @@ const {
     color: var(--accent);
     font-size: 0.76rem;
     font-weight: 800;
-    letter-spacing: 0.16em;
+    letter-spacing: 0;
     text-transform: uppercase;
     margin-bottom: 10px;
   }
@@ -147,7 +147,7 @@ const {
   .page-title {
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.16;
-    letter-spacing: -0.04em;
+    letter-spacing: 0;
   }
 
   .page-intro {
@@ -163,13 +163,13 @@ const {
   .profile-panel {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 6px;
   }
 
   .section-title {
     color: var(--text);
     font-size: 1.03rem;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     margin-bottom: 16px;
   }
 
@@ -185,7 +185,8 @@ const {
     min-height: 26px;
     padding: 4px 9px;
     border-radius: 999px;
-    background: #e8f4fb;
+    border: 1px solid var(--line-strong);
+    background: #ffffff;
     color: #111111;
     font-size: 0.78rem;
     line-height: 1.2;
@@ -197,7 +198,7 @@ const {
     justify-content: center;
     min-height: 38px;
     padding: 8px 12px;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid var(--line-strong);
     color: var(--text);
     font-size: 0.9rem;
@@ -205,7 +206,7 @@ const {
   }
 
   .button-link:hover {
-    border-color: var(--accent);
+    border-color: var(--line-strong);
     color: var(--accent-2);
   }
 
@@ -226,7 +227,7 @@ const {
 
   .archive-card:hover {
     transform: translateY(-2px);
-    border-color: var(--accent);
+    border-color: var(--line-strong);
   }
 
   .archive-meta {
@@ -245,7 +246,7 @@ const {
   .archive-card h3 {
     font-size: clamp(1.15rem, 2vw, 1.45rem);
     line-height: 1.3;
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
     word-break: keep-all;
   }
 
@@ -271,7 +272,7 @@ const {
     color: var(--text);
     margin: 30px 0 10px;
     line-height: 1.35;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   .detail-content p,
@@ -312,8 +313,8 @@ const {
   .detail-content pre {
     overflow-x: auto;
     padding: 16px;
-    border-radius: 8px;
-    background: #f4f6f8;
+    border-radius: 6px;
+    background: #f7f7f7;
     border: 1px solid var(--line);
   }
 
@@ -338,14 +339,14 @@ const {
   }
 
   .detail-content th {
-    background: #f4f6f8;
+    background: #f7f7f7;
     color: var(--text);
   }
 
   .empty-state {
     margin-top: 28px;
     padding: 28px;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px dashed var(--line-strong);
     color: var(--muted);
     word-break: keep-all;

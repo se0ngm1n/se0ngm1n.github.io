@@ -5,7 +5,7 @@ export const profile = {
   university: 'Konkuk University',
   department: 'Mechanical & Aerospace Engineering',
   location: 'Seoul, Republic of Korea',
-  email: 'lsm010711**@naver.com',
+  email: 'lsm010711@naver.com',
   phone: '+82 10-3038-1872',
   showPhone: true,
   github: 'https://github.com/se0ngm1n',

@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { profile } from '../data/profile';
 
 const hasResume = profile.resume.available && profile.resume.href;
+const roleLines = profile.role.split(' · ');
 ---
 
 <BaseLayout
@@ -25,7 +26,9 @@ const hasResume = profile.resume.available && profile.resume.href;
           <p>{profile.englishName}</p>
         </div>
 
-        <p class="role">{profile.role}</p>
+        <p class="role">
+          {roleLines.map((line) => <span>{line}</span>)}
+        </p>
 
         <dl class="contact-list">
           <div>
@@ -84,17 +87,17 @@ const hasResume = profile.resume.available && profile.resume.href;
         </section>
 
         <section class="section-card info-section">
-          <h2 class="section-title">Focus Areas</h2>
-          <div class="tag-list">
-            {profile.focusAreas.map((area) => <span class="tag">{area}</span>)}
-          </div>
-        </section>
-
-        <section class="section-card info-section">
           <h2 class="section-title">Awards</h2>
           <ul class="award-list">
             {profile.awards.map((award) => <li>{award}</li>)}
           </ul>
+        </section>
+
+        <section class="section-card info-section">
+          <h2 class="section-title">Focus Areas</h2>
+          <div class="tag-list">
+            {profile.focusAreas.map((area) => <span class="tag">{area}</span>)}
+          </div>
         </section>
 
         <nav class="nav-card-grid" aria-label="Portfolio sections">
@@ -112,7 +115,7 @@ const hasResume = profile.resume.available && profile.resume.href;
 <style>
   .cv-shell {
     min-height: calc(100vh - 64px);
-    padding: clamp(26px, 5vw, 54px) 0;
+    padding: clamp(28px, 5vw, 58px) 0;
     display: flex;
     align-items: center;
   }
@@ -120,13 +123,13 @@ const hasResume = profile.resume.available && profile.resume.href;
   .cv-grid {
     width: 100%;
     display: grid;
-    grid-template-columns: minmax(280px, 350px) 1fr;
-    gap: 22px;
+    grid-template-columns: minmax(280px, 330px) 1fr;
+    gap: 24px;
     align-items: stretch;
   }
 
   .profile-card {
-    padding: 24px;
+    padding: 26px;
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -135,7 +138,7 @@ const hasResume = profile.resume.available && profile.resume.href;
   .portrait {
     width: 148px;
     aspect-ratio: 1;
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
     border: 1px solid var(--line-strong);
     background: var(--panel-2);
@@ -158,7 +161,7 @@ const hasResume = profile.resume.available && profile.resume.href;
   .identity h1 {
     font-size: clamp(2rem, 4vw, 2.7rem);
     line-height: 1.05;
-    letter-spacing: -0.04em;
+    letter-spacing: 0;
   }
 
   .identity p,
@@ -169,7 +172,9 @@ const hasResume = profile.resume.available && profile.resume.href;
   }
 
   .role {
-    font-size: 0.96rem;
+    display: grid;
+    gap: 2px;
+    font-size: 0.98rem;
     word-break: keep-all;
   }
 
@@ -186,7 +191,7 @@ const hasResume = profile.resume.available && profile.resume.href;
   .contact-list dt {
     font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.12em;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
 
@@ -210,16 +215,12 @@ const hasResume = profile.resume.available && profile.resume.href;
 
   .cv-main {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1fr;
     gap: 14px;
   }
 
   .info-section {
-    padding: 22px;
-  }
-
-  .info-section:first-child {
-    grid-column: 1 / -1;
+    padding: 22px 24px;
   }
 
   .education-block {
@@ -230,7 +231,7 @@ const hasResume = profile.resume.available && profile.resume.href;
 
   .education-block strong {
     font-size: 1.28rem;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   .education-block span,
@@ -240,7 +241,7 @@ const hasResume = profile.resume.available && profile.resume.href;
 
   .award-list {
     display: grid;
-    gap: 9px;
+    gap: 8px;
     padding-left: 18px;
     color: var(--text);
     font-size: 0.92rem;
@@ -248,32 +249,31 @@ const hasResume = profile.resume.available && profile.resume.href;
   }
 
   .nav-card-grid {
-    grid-column: 1 / -1;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: 10px;
   }
 
   .nav-card {
-    min-height: 48px;
-    padding: 13px 18px;
-    border-radius: 8px;
+    min-height: 46px;
+    padding: 12px 18px;
+    border-radius: 6px;
     border: 1px solid #111111;
-    background: #d9eefc;
-    color: #111111;
+    background: #111111;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     transition:
       transform 0.18s ease,
       background 0.18s ease,
-      box-shadow 0.18s ease;
+      color 0.18s ease;
   }
 
   .nav-card:hover {
     transform: translateY(-2px);
-    background: #bfe3fa;
-    box-shadow: 0 8px 18px rgba(15, 110, 168, 0.18);
+    background: #ffffff;
+    color: #111111;
   }
 
   .nav-card span {
