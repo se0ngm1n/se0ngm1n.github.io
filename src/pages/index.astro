@@ -1,11 +1,645 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+const projects = [
+  {
+    title: 'DropShield',
+    subtitle: '드론 전용 투하형 자동팽창 구조장비',
+    period: '2025.06 — 2025.09',
+    category: 'Drone · Prototype',
+    description:
+      '수난사고 현장에서 드론이 구조장비를 신속하고 안정적으로 투하할 수 있도록 설계한 자동팽창형 구조장비 프로젝트입니다.',
+    skills: ['Arduino', 'CAD', 'Drone', 'Prototype'],
+  },
+  {
+    title: 'AMR Navigation Control',
+    subtitle: '동적 장애물 예측 기반 주행 제어',
+    period: '2026',
+    category: 'Robotics · Simulation',
+    description:
+      'LSTM 기반 동적 장애물 위치 예측과 MPPI 주행 제어를 결합하여 산업용 AMR의 안전한 경로 생성을 연구하는 프로젝트입니다.',
+    skills: ['Python', 'MATLAB', 'Webots', 'MPPI'],
+  },
+  {
+    title: 'Quadruped Robot RL',
+    subtitle: 'Isaac Sim 기반 4족보행 강화학습',
+    period: '2026',
+    category: 'Physical AI · Reinforcement Learning',
+    description:
+      '외란이나 다리 이상 상황에서도 자세를 유지할 수 있는 4족보행 로봇 정책을 시뮬레이션 환경에서 학습하는 프로젝트입니다.',
+    skills: ['Isaac Sim', 'RL', 'Robotics', 'Simulation'],
+  },
+  {
+    title: 'Defense AI Robot',
+    subtitle: 'Jetson Nano 기반 객체탐지 및 주행 제어',
+    period: '2025',
+    category: 'AI · Embedded',
+    description:
+      '제한된 엣지 컴퓨팅 환경에서 객체 인식 모델과 이동 로봇 제어를 구현한 국방 AI 경진대회 프로젝트입니다.',
+    skills: ['Jetson Nano', 'YOLO', 'Python', 'Robot Control'],
+  },
+];
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const skills = [
+  'Python',
+  'MATLAB',
+  'Arduino',
+  'ESP32',
+  'Isaac Sim',
+  'Webots',
+  'YOLO',
+  'XGBoost',
+  'CAD',
+  'Git',
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이성민 | Robotics & Physical AI Portfolio</title>
+    <meta
+      name="description"
+      content="기계공학 기반 Robotics, Physical AI, Autonomous Systems 포트폴리오"
+    />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container nav">
+        <a class="logo" href="/">SEONGMIN.</a>
+
+        <nav>
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="https://github.com/se0ngm1n" target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <div class="hero-content">
+          <p class="label">MECHANICAL ENGINEERING · ROBOTICS · PHYSICAL AI</p>
+
+          <h1>
+            실제 물리 시스템에<br />
+            <span>AI와 제어 기술</span>을 연결합니다.
+          </h1>
+
+          <p class="intro">
+            건국대학교 기계공학 전공 이성민입니다. 드론 구조 시스템,
+            자율주행 로봇, 강화학습 기반 로봇 제어 프로젝트를 수행하며
+            현실 문제를 해결하는 로보틱스 엔지니어를 지향합니다.
+          </p>
+
+          <div class="buttons">
+            <a class="primary" href="#projects">프로젝트 보기</a>
+            <a
+              class="secondary"
+              href="https://github.com/se0ngm1n"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub 방문
+            </a>
+          </div>
+        </div>
+
+        <aside class="profile-card">
+          <div class="profile-top">
+            <div class="avatar">SM</div>
+            <div>
+              <strong>이성민</strong>
+              <p>Mechanical Engineering</p>
+            </div>
+          </div>
+
+          <div class="profile-info">
+            <div>
+              <span>Interest</span>
+              <p>Robotics · Physical AI</p>
+            </div>
+            <div>
+              <span>Focus</span>
+              <p>Autonomous Systems</p>
+            </div>
+            <div>
+              <span>Based in</span>
+              <p>Seoul, Republic of Korea</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="projects" class="projects-section">
+        <div class="container">
+          <div class="section-title">
+            <div>
+              <p class="label">SELECTED WORKS</p>
+              <h2>Projects</h2>
+            </div>
+            <p class="section-description">
+              직접 설계하고 구현한 로보틱스 및 AI 프로젝트입니다.
+            </p>
+          </div>
+
+          <div class="projects-grid">
+            {projects.map((project) => (
+              <article class="project-card">
+                <div class="project-meta">
+                  <span>{project.category}</span>
+                  <time>{project.period}</time>
+                </div>
+
+                <h3>{project.title}</h3>
+                <h4>{project.subtitle}</h4>
+                <p class="project-description">{project.description}</p>
+
+                <div class="tags">
+                  {project.skills.map((skill) => <span>{skill}</span>)}
+                </div>
+
+                <p class="coming-soon">상세 페이지 준비 중 →</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="about-section container">
+        <div class="section-title">
+          <div>
+            <p class="label">ABOUT ME</p>
+            <h2>Engineering with Real-World Impact</h2>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <p>
+            기계공학을 기반으로 센서, 임베디드 시스템, 시뮬레이션,
+            인공지능 기술을 결합한 프로젝트를 수행해왔습니다.
+            단순한 모델 성능 향상보다, 실제 하드웨어와 환경에서
+            작동 가능한 시스템을 구현하는 것에 관심이 있습니다.
+          </p>
+
+          <div class="about-points">
+            <div>
+              <strong>Robotics</strong>
+              <span>드론, AMR, 4족보행 로봇 제어</span>
+            </div>
+            <div>
+              <strong>AI</strong>
+              <span>객체탐지, 예측 모델, 강화학습</span>
+            </div>
+            <div>
+              <strong>Implementation</strong>
+              <span>프로토타이핑, 임베디드, 시뮬레이션</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="skills-section">
+        <div class="container">
+          <p class="label">TECH STACK</p>
+          <div class="skills-list">
+            {skills.map((skill) => <span>{skill}</span>)}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>© 2026 Seongmin Lee. All rights reserved.</p>
+        <a href="https://github.com/se0ngm1n" target="_blank" rel="noopener noreferrer">
+          github.com/se0ngm1n
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    background: #0c1017;
+    color: #f4f7fb;
+    font-family:
+      Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    line-height: 1.6;
+  }
+
+  :global(a) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .container {
+    width: min(1160px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(12, 16, 23, 0.82);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav {
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  nav {
+    display: flex;
+    gap: 28px;
+    color: #aeb8c8;
+    font-size: 0.95rem;
+  }
+
+  nav a:hover {
+    color: #ffffff;
+  }
+
+  .hero {
+    min-height: calc(100vh - 72px);
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    align-items: center;
+    gap: 64px;
+    padding: 72px 0;
+  }
+
+  .label {
+    color: #55c6ff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-size: clamp(2.7rem, 5vw, 4.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.06em;
+    margin-bottom: 28px;
+  }
+
+  h1 span {
+    color: #55c6ff;
+  }
+
+  .intro {
+    max-width: 630px;
+    color: #aeb8c8;
+    font-size: 1.04rem;
+    margin-bottom: 40px;
+    word-break: keep-all;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 14px;
+  }
+
+  .buttons a {
+    display: inline-flex;
+    align-items: center;
+    height: 52px;
+    padding: 0 24px;
+    border-radius: 12px;
+    font-weight: 650;
+    transition: 0.18s ease;
+  }
+
+  .primary {
+    background: #55c6ff;
+    color: #081019;
+  }
+
+  .primary:hover {
+    transform: translateY(-2px);
+    background: #83d6ff;
+  }
+
+  .secondary {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #e8eef7;
+  }
+
+  .secondary:hover {
+    border-color: rgba(255, 255, 255, 0.34);
+  }
+
+  .profile-card {
+    padding: 28px;
+    border-radius: 28px;
+    background: #131a25;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .profile-top {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding-bottom: 26px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    background: rgba(85, 198, 255, 0.14);
+    color: #55c6ff;
+    font-weight: 750;
+    font-size: 1.2rem;
+  }
+
+  .profile-top strong {
+    font-size: 1.12rem;
+  }
+
+  .profile-top p {
+    font-size: 0.9rem;
+    color: #8490a2;
+  }
+
+  .profile-info {
+    display: grid;
+    gap: 20px;
+    padding-top: 25px;
+  }
+
+  .profile-info span {
+    color: #778397;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .profile-info p {
+    color: #e2e8f1;
+    font-size: 0.96rem;
+    margin-top: 5px;
+  }
+
+  .projects-section {
+    padding: 96px 0;
+    background: #0f141d;
+  }
+
+  .section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.05em;
+    line-height: 1.25;
+  }
+
+  .section-description {
+    color: #98a4b5;
+    max-width: 380px;
+    text-align: right;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .project-card {
+    min-height: 332px;
+    padding: 30px;
+    border-radius: 22px;
+    background: #151c27;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: 0.18s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(85, 198, 255, 0.34);
+  }
+
+  .project-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: #55c6ff;
+    font-size: 0.78rem;
+    font-weight: 650;
+    margin-bottom: 23px;
+  }
+
+  .project-meta time {
+    color: #8b97a9;
+  }
+
+  .project-card h3 {
+    font-size: 1.45rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 5px;
+  }
+
+  .project-card h4 {
+    font-size: 0.96rem;
+    color: #99a7ba;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .project-description {
+    color: #b4bfcd;
+    font-size: 0.93rem;
+    word-break: keep-all;
+    margin-bottom: 22px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .tags span,
+  .skills-list span {
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: rgba(85, 198, 255, 0.08);
+    color: #c7eaff;
+    font-size: 0.78rem;
+  }
+
+  .coming-soon {
+    margin-top: 25px;
+    color: #7e899b;
+    font-size: 0.87rem;
+  }
+
+  .about-section {
+    padding: 108px 0;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 440px;
+    gap: 70px;
+    align-items: start;
+  }
+
+  .about-grid > p {
+    color: #afbac9;
+    font-size: 1.04rem;
+    word-break: keep-all;
+  }
+
+  .about-points {
+    display: grid;
+    gap: 22px;
+  }
+
+  .about-points div {
+    display: grid;
+    gap: 4px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .about-points strong {
+    color: #eef4fc;
+  }
+
+  .about-points span {
+    color: #93a0b2;
+    font-size: 0.92rem;
+  }
+
+  .skills-section {
+    padding: 68px 0;
+    background: #0f141d;
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .skills-list span {
+    padding: 11px 18px;
+    font-size: 0.94rem;
+  }
+
+  .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 29px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    color: #798596;
+    font-size: 0.9rem;
+  }
+
+  .footer-inner a:hover {
+    color: #55c6ff;
+  }
+
+  @media (max-width: 920px) {
+    .hero,
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero {
+      gap: 48px;
+      padding: 68px 0;
+    }
+
+    .profile-card {
+      max-width: 420px;
+    }
+
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .container {
+      width: min(100% - 32px, 1160px);
+    }
+
+    .nav {
+      height: 64px;
+    }
+
+    nav a:not(:last-child) {
+      display: none;
+    }
+
+    h1 {
+      font-size: 2.45rem;
+    }
+
+    .buttons {
+      flex-direction: column;
+    }
+
+    .buttons a {
+      justify-content: center;
+    }
+
+    .section-title,
+    .footer-inner {
+      display: block;
+    }
+
+    .section-description {
+      margin-top: 14px;
+      text-align: left;
+    }
+
+    .footer-inner a {
+      display: block;
+      margin-top: 8px;
+    }
+  }
+</style>
