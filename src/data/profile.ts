@@ -32,7 +32,13 @@ export const profile = {
     '한국공과대학장협의회 (KEDC) 한국공과대학장협의회장상 수상',
     'DACON 스마트 창고 출고 지연 예측 AI 경진대회 607팀 중 33등, 상위 5.4%',
   ],
-  focusAreas: ['Physical AI', 'Robotics', 'Autonomous Driving'],
+  focusAreas: [
+    'Physical AI',
+    'Robotics',
+    'Reinforcement Learning',
+    'Robot Control',
+    'Simulation-to-Real',
+  ],
   navigationCards: [
     {
       title: 'Projects',
