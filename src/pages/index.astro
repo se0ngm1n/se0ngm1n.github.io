@@ -107,9 +107,9 @@ const roleLines = profile.role.split(' · ');
 <style>
   .cv-shell {
     min-height: calc(100vh - 64px);
-    padding: clamp(28px, 5vw, 58px) 0;
+    padding: clamp(18px, 3vw, 36px) 0 clamp(28px, 5vw, 58px);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .cv-grid {
@@ -128,7 +128,7 @@ const roleLines = profile.role.split(' · ');
   }
 
   .portrait {
-    width: 148px;
+    width: 132px;
     aspect-ratio: 1;
     border-radius: 6px;
     overflow: hidden;

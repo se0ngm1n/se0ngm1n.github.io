@@ -11,8 +11,8 @@ export const profile = {
   github: 'https://github.com/se0ngm1n',
   portfolio: 'https://se0ngm1n.com',
   image: {
-    src: '',
-    alt: '',
+    src: '/images/profile.jpg',
+    alt: '이성민 프로필 사진',
   },
   resume: {
     available: false,
