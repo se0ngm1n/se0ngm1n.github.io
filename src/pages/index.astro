@@ -11,6 +11,8 @@ const roleLines = profile.role.split(' · ');
   description="이성민의 개인 포트폴리오 및 온라인 CV"
 >
   <main class="cv-shell">
+    <p class="home-quote">생각하는대로 살지 않으면 사는대로 살게 된다.</p>
+
     <section class="cv-grid" aria-label="Seongmin Lee CV overview">
       <aside class="profile-panel profile-card">
         <div class="portrait" aria-label="Profile image placeholder">
@@ -59,13 +61,11 @@ const roleLines = profile.role.split(' · ');
           )}
         </dl>
 
-        <div class="resume-box">
-          {hasResume ? (
+        {hasResume && (
+          <div class="resume-box">
             <a class="button-link" href={profile.resume.href} download>Download Resume PDF</a>
-          ) : (
-            <span>Resume will be added soon</span>
-          )}
-        </div>
+          </div>
+        )}
       </aside>
 
       <div class="cv-main">
@@ -104,10 +104,7 @@ const roleLines = profile.role.split(' · ');
 
     <footer class="home-footer" aria-label="Homepage footer">
       <p>© 2025 se0ngm1n. 일부 권리 보유.</p>
-      <p class="home-footer__quote">
-        <span>생각하는대로 살지 않으면 사는대로 살게 된다.</span>
-        <span>071128</span>
-      </p>
+      <p class="home-footer__mark">071128</p>
     </footer>
   </main>
 </BaseLayout>
@@ -119,7 +116,15 @@ const roleLines = profile.role.split(' · ');
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 20px;
+    gap: 16px;
+  }
+
+  .home-quote {
+    color: var(--soft);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    text-align: right;
+    word-break: keep-all;
   }
 
   .cv-grid {
@@ -168,7 +173,6 @@ const roleLines = profile.role.split(' · ');
 
   .identity p,
   .role,
-  .contact-list dt,
   .resume-box {
     color: var(--muted);
   }
@@ -182,15 +186,16 @@ const roleLines = profile.role.split(' · ');
 
   .contact-list {
     display: grid;
-    gap: 12px;
+    gap: 16px;
   }
 
   .contact-list div {
     display: grid;
-    gap: 2px;
+    gap: 4px;
   }
 
   .contact-list dt {
+    color: var(--text);
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0;
@@ -223,6 +228,10 @@ const roleLines = profile.role.split(' · ');
 
   .info-section {
     padding: 22px 24px;
+  }
+
+  .info-section .section-title {
+    font-size: 1.12rem;
   }
 
   .education-block {
@@ -295,11 +304,8 @@ const roleLines = profile.role.split(' · ');
     line-height: 1.45;
   }
 
-  .home-footer__quote {
-    display: grid;
-    gap: 2px;
+  .home-footer__mark {
     text-align: right;
-    word-break: keep-all;
   }
 
   @media (max-width: 900px) {
@@ -336,7 +342,8 @@ const roleLines = profile.role.split(' · ');
       gap: 8px;
     }
 
-    .home-footer__quote {
+    .home-quote,
+    .home-footer__mark {
       text-align: left;
     }
   }
