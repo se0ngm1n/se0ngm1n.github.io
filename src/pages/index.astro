@@ -66,6 +66,11 @@ const hasLanguages = profile.languages.length > 0;
           )}
         </dl>
 
+        <section class="profile-focus" aria-labelledby="profile-focus-title">
+          <h2 id="profile-focus-title">Focus Areas</h2>
+          <FocusAreas areas={profile.focusAreas} />
+        </section>
+
         {hasResume && (
           <div class="resume-box">
             <a class="button-link" href={profile.resume.href} download>Download Resume PDF</a>
@@ -124,11 +129,6 @@ const hasLanguages = profile.languages.length > 0;
             </ul>
           </section>
         )}
-
-        <section class="section-card info-section">
-          <h2 class="section-title">Focus Areas</h2>
-          <FocusAreas areas={profile.focusAreas} />
-        </section>
 
         <nav class="nav-card-grid" aria-label="Portfolio sections">
           {profile.navigationCards.map((card) => (
@@ -266,6 +266,21 @@ const hasLanguages = profile.languages.length > 0;
 
   .contact-list a:hover {
     color: var(--accent-2);
+  }
+
+  .profile-focus {
+    display: grid;
+    gap: 10px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+
+  .profile-focus h2 {
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
   }
 
   .resume-box {

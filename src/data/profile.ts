@@ -61,6 +61,7 @@ export const profile = {
     'Reinforcement Learning',
     'Robot Control',
     'Simulation-to-Real',
+    'Behavioral Cloning',
   ],
   navigationCards: [
     {
