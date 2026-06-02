@@ -37,6 +37,7 @@ const life = defineCollection({
     summary: z.string().optional(),
     cover: z.string().optional(),
     gallery: z.array(z.string()).default([]),
+    mediaLayout: z.enum(['gallery', 'inline']).default('gallery'),
   }),
 });
 
