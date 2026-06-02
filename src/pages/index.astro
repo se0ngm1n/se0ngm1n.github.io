@@ -5,6 +5,8 @@ import { profile } from '../data/profile';
 
 const hasResume = profile.resume.available && profile.resume.href;
 const roleLines = profile.role.split(' · ');
+const hasCertifications = profile.certifications.length > 0;
+const hasLanguages = profile.languages.length > 0;
 ---
 
 <BaseLayout
@@ -93,6 +95,35 @@ const roleLines = profile.role.split(' · ');
             {profile.awards.map((award) => <li>{award}</li>)}
           </ul>
         </section>
+
+        {/* Optional CV blocks: move or remove these sections when the CV order changes. */}
+        {hasCertifications && (
+          <section class="section-card info-section optional-cv-block">
+            <h2 class="section-title">Certifications</h2>
+            <ul class="compact-list">
+              {profile.certifications.map((item) => (
+                <li>
+                  <span>{item.name}</span>
+                  {item.status && <em>({item.status})</em>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hasLanguages && (
+          <section class="section-card info-section optional-cv-block">
+            <h2 class="section-title">Language</h2>
+            <ul class="compact-list">
+              {profile.languages.map((item) => (
+                <li>
+                  <span>{item.name}</span>
+                  {item.status && <em>({item.status})</em>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section class="section-card info-section">
           <h2 class="section-title">Focus Areas</h2>
@@ -307,6 +338,41 @@ const roleLines = profile.role.split(' · ');
     color: var(--text);
     font-size: 0.92rem;
     word-break: keep-all;
+  }
+
+  .optional-cv-block {
+    padding-block: 18px;
+  }
+
+  .compact-list {
+    display: grid;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    color: var(--text);
+    font-size: 0.92rem;
+    word-break: keep-all;
+  }
+
+  .compact-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .compact-list li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .compact-list em {
+    flex: 0 0 auto;
+    color: var(--soft);
+    font-size: 0.78rem;
+    font-style: normal;
   }
 
   .nav-card-grid {

@@ -37,6 +37,24 @@ export const profile = {
     'DACON 스마트 창고 출고 지연 예측 AI 경진대회 607팀 중 33등, 상위 5.4%',
     '2026 AI ROOKIE 경진대회 100/721 (본선 진행중)',
   ],
+  certifications: [
+    {
+      name: '대한적십자사 인명 구조 요원',
+    },
+    {
+      name: '해양경찰청 수상구조사',
+    },
+    {
+      name: '일반기계기사',
+      status: '준비중',
+    },
+  ],
+  languages: [
+    {
+      name: 'OPIc',
+      status: '준비중',
+    },
+  ],
   focusAreas: [
     'Physical AI',
     'Robotics',
