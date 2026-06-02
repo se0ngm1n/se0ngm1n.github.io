@@ -23,7 +23,6 @@ const toDateKey = (date: DateLike) =>
 const formatDate = (date: DateLike) => toDateKey(date).replaceAll('-', '.');
 const studyContentModules = import.meta.glob('../../content/study/**/*.md');
 const thumbnailImageIndexes: Record<string, number> = {
-  'unitree-go2-part-0-unitree-ros2-architecture': 1,
   'isaaclab-part-4-rl-policy-isaac-sim': 2,
   'isaaclab-part-3-rl-training': 8,
   'isaaclab-part-2-environment': 1,
@@ -99,8 +98,7 @@ const posts = Array.from(postMap.values()).sort(
     <p class="page-kicker">Technical Notes</p>
     <h1 class="page-title">Study</h1>
     <p class="page-intro">
-      시뮬레이션, 강화학습, 로봇 제어, 개발 환경 구축 과정에서 정리한 기술
-      노트입니다.
+      시뮬레이션, 강화학습, 로봇 제어, 개발 환경 구축 과정 정리 노트입니다
     </p>
 
     {posts.length > 0 ? (
