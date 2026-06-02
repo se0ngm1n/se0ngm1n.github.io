@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FocusAreas from '../components/FocusAreas.astro';
 import { profile } from '../data/profile';
 
 const hasResume = profile.resume.available && profile.resume.href;
@@ -93,9 +94,7 @@ const roleLines = profile.role.split(' · ');
 
         <section class="section-card info-section">
           <h2 class="section-title">Focus Areas</h2>
-          <div class="tag-list">
-            {profile.focusAreas.map((area) => <span class="tag">{area}</span>)}
-          </div>
+          <FocusAreas areas={profile.focusAreas} />
         </section>
 
         <nav class="nav-card-grid" aria-label="Portfolio sections">
