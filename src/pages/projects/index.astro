@@ -13,7 +13,10 @@ const projects = (await getCollection('projects')).sort(
 >
   <main class="page-shell">
     <p class="page-kicker">Selected Work</p>
-    <h1 class="page-title">Projects</h1>
+    <h1 class="page-title page-title--with-status">
+      <span>Projects</span>
+      <span class="page-title-status">- (미완) 내용 정리 후 추가 예정</span>
+    </h1>
     <p class="page-intro">
       로보틱스, 물리 AI, 임베디드 시스템, 프로토타입 개발을 중심으로 진행한
       프로젝트 기록입니다.
@@ -52,6 +55,20 @@ const projects = (await getCollection('projects')).sort(
 </BaseLayout>
 
 <style>
+  .page-title--with-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .page-title-status {
+    color: var(--muted);
+    font-size: clamp(0.95rem, 1.6vw, 1.12rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
   .project-card {
     grid-template-columns: 1fr;
   }
