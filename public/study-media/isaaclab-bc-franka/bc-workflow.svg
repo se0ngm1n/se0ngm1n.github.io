@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 620" width="1400" height="620">
+  <defs>
+    <style>
+      .bg { fill:#0f172a; }
+      .title { fill:#f8fafc; font:700 36px 'Noto Sans KR','Arial',sans-serif; }
+      .sub { fill:#94a3b8; font:400 18px 'Noto Sans KR','Arial',sans-serif; }
+      .box { fill:#172337; stroke:#334155; stroke-width:2; rx:20; }
+      .box2 { fill:#172337; stroke:#22c55e; stroke-width:2; rx:20; }
+      .h { fill:#f8fafc; font:700 23px 'Noto Sans KR','Arial',sans-serif; }
+      .p { fill:#cbd5e1; font:400 17px 'Noto Sans KR','Arial',sans-serif; }
+      .tag { fill:#22c55e; font:700 15px 'Arial',sans-serif; letter-spacing:1px; }
+      .arrow { stroke:#64748b; stroke-width:4; fill:none; marker-end:url(#arrowhead); }
+      .formula { fill:#86efac; font:500 20px 'Arial',sans-serif; }
+      .footer { fill:#64748b; font:400 15px 'Noto Sans KR','Arial',sans-serif; }
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1400" height="620"/>
+  <text x="62" y="66" class="title">Behavior Cloning 학습 흐름</text>
+  <text x="62" y="101" class="sub">전문가의 성공 동작을 observation–action pair로 학습해 정책(policy)이 행동을 예측한다.</text>
+
+  <rect class="box" x="62" y="170" width="275" height="198" rx="20"/>
+  <text x="90" y="205" class="tag">01  DEMONSTRATION</text>
+  <text x="90" y="251" class="h">전문가 시연</text>
+  <text x="90" y="290" class="p">로봇 상태 oₜ</text>
+  <text x="90" y="320" class="p">전문가 행동 aₜ</text>
+  <text x="90" y="349" class="formula">(oₜ, aₜ)</text>
+
+  <path class="arrow" d="M350 268 L409 268"/>
+
+  <rect class="box" x="423" y="170" width="300" height="198" rx="20"/>
+  <text x="451" y="205" class="tag">02  ISAAC LAB MIMIC</text>
+  <text x="451" y="251" class="h">시연 데이터 확장</text>
+  <text x="451" y="290" class="p">subtask annotation</text>
+  <text x="451" y="320" class="p">trajectory 변형 · 연결</text>
+  <text x="451" y="349" class="p">추가 demonstrations 생성</text>
+
+  <path class="arrow" d="M737 268 L796 268"/>
+
+  <rect class="box2" x="810" y="170" width="296" height="198" rx="20"/>
+  <text x="838" y="205" class="tag">03  ROBOMIMIC BC-RNN</text>
+  <text x="838" y="251" class="h">정책 학습</text>
+  <text x="838" y="290" class="p">관측 → 행동 예측</text>
+  <text x="838" y="321" class="formula">πθ(oₜ) ≈ aₜ</text>
+  <text x="838" y="349" class="p">loss 최소화</text>
+
+  <path class="arrow" d="M1120 268 L1179 268"/>
+
+  <rect class="box" x="1193" y="170" width="150" height="198" rx="20"/>
+  <text x="1219" y="205" class="tag">04</text>
+  <text x="1219" y="251" class="h">Policy</text>
+  <text x="1219" y="290" class="p">.pth</text>
+  <text x="1219" y="321" class="p">checkpoint</text>
+
+  <rect x="62" y="434" width="1281" height="98" rx="18" fill="#111c31" stroke="#1e293b" stroke-width="2"/>
+  <text x="90" y="473" class="formula">L_BC(θ) = − E_(o,a)~D [ log πθ(a | o) ]</text>
+  <text x="90" y="508" class="p">전문가가 선택한 행동의 확률을 높이는 방향으로 policy parameter θ를 업데이트한다.</text>
+  <text x="62" y="579" class="footer">작성용 도식 · Isaac Lab Mimic / Robomimic BC-RNN 실습 흐름에 맞추어 구성</text>
+</svg>
