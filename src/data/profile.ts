@@ -2,7 +2,7 @@ export const profile = {
   name: '이성민',
   englishName: 'Seongmin Lee',
   role: 'Mechanical Engineering Student · Robotics / Physical AI',
-  university: 'Konkuk University',
+  university: 'Konkuk University (Senior)',
   department: 'Mechanical & Aerospace Engineering',
   location: 'Seoul, Republic of Korea',
   email: 'lsm010711@naver.com',
