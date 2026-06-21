@@ -22,4 +22,4 @@ order: 0
 
 ## 진행현황
 
-[SO-ARM 101 Manipulator Project Part 1 보기](/study/so-arm-101-manipulator-part-1/)
+[\[SO-ARM 101 Manipulator Project Part 1\] 로봇 조립, Calibration, Teleoperation 보기](/study/so-arm-101-manipulator-part-1/)

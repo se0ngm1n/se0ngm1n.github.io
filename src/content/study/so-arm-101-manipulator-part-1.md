@@ -1,5 +1,5 @@
 ---
-title: "SO-ARM 101 Manipulator Project Part 1"
+title: "[SO-ARM 101 Manipulator Project Part 1] 로봇 조립, Calibration, Teleoperation"
 date: 2026-06-21
 category: "Manipulator Project"
 summary: "SO-ARM 101 리더·팔로워 암의 조립, 모터 ID 설정, 캘리브레이션, 텔레오퍼레이션 검증 기록"
@@ -60,7 +60,7 @@ LeRobot은 텔레오퍼레이션 입력, 데이터셋에 저장할 행동, 로�
   </figure>
   <figure class="project-media">
     <img src="/study-media/so-arm-101-part-1/02-kit-arrival.jpg" alt="조립 전 바닥에 펼쳐 둔 SO-ARM 101 부품과 공구" loading="lazy" decoding="async" />
-    <figcaption>조립 전 부품과 서보모터 정리</figcaption>
+    <figcaption>모터 ID 부여</figcaption>
   </figure>
 </div>
 
@@ -72,9 +72,9 @@ LeRobot은 텔레오퍼레이션 입력, 데이터셋에 저장할 행동, 로�
 
 리더 암과 팔로워 암은 같은 관절 구조를 사용하므로 양쪽의 ID 체계를 일관되게 맞췄다. 이 단계에서 각 모터의 응답과 회전 방향도 함께 확인해 조립 이후 발생할 수 있는 배선 및 설정 문제를 줄였다.
 
-SO-ARM101의 직렬 버스에서는 각 모터가 고유 ID로 구분되고, 컨트롤러와 모든 모터가 같은 baudrate를 사용해야 통신할 수 있다. 새 모터는 동일한 기본 ID를 가진 경우가 있기 때문에 처음에는 모터를 하나씩 연결해 ID와 baudrate를 기록한다. 이 설정은 모터의 비휘발성 메모리에 저장되므로 정상적으로 완료되면 매번 반복할 필요는 없다. 이 절차는 [SO-101 공식 설치 문서](https://huggingface.co/docs/lerobot/en/so101)의 모터 설정 단계와 동일한 흐름이다.
+SO-ARM101의 직렬 버스에서는 각 모터가 고유 ID로 구분되고, 컨트롤러와 모든 모터가 같은 baudrate를 사용해야 통신할 수 있다. 새 모터는 동일한 기본 ID를 가진 경우가 있기 때문에 처음에는 모터를 하나씩 연결해 ID와 baudrate를 기록한다. 이 설정은 모터의 비휘발성 메모리에 저장되므로 정상적으로 완료되면 매번 반복할 필요는 없다.
 
-사용한 포트를 다시 확인하고 모터를 설정할 때 사용할 수 있는 명령은 다음과 같다. 실제 실행 시에는 포트 문자열을 현재 장치에 맞게 바꿔야 한다.
+사용한 포트를 다시 확인하고 모터를 설정할 때 사용할 수 있는 명령은 다음과 같다.
 
 ```bash
 # USB를 분리하는 방식으로 리더/팔로워 포트 식별
@@ -103,7 +103,7 @@ lerobot-setup-motors \
 
 조립 시작, 천천히 유튜브 보면서 하니 아이디 부여하고 조립하고 캘리브레이션까지 4시간 정도 걸린 것 같다
 
-조립 과정에서는 링크 방향과 서보모터의 초기 위치가 잘못 맞물리지 않도록 확인했다. 외형 조립만 끝내는 것이 아니라 관절을 전체 가동 범위에서 천천히 움직여 보면서 배선이 당겨지거나 구조물과 충돌하는 구간이 없는지도 점검했다.
+조립 과정에서는 링크 방향과 서보모터의 초기 위치가 잘못 맞물리지 않도록 확인했다. 모터의 최대 최소 가동 구간을 확인하여 리더암과 팔로우 암의 움직임을 맞춰주고, 배선이 당겨지거나 조립에 이상이 있는지도 확인하였다.
 
 <figure class="project-media project-media--video">
   <video controls muted playsinline preload="metadata" poster="/study-media/so-arm-101-part-1/video-02-poster.jpg">
@@ -135,17 +135,15 @@ lerobot-setup-motors \
 
 개념적으로 관절 `i`의 원시 위치 `r_i`를 0과 1 사이의 값으로 정규화하면 다음과 같이 표현할 수 있다.
 
-\[
-u_i = \operatorname{clip}\left(
-\frac{r_i-r_{i,\min}}{r_{i,\max}-r_{i,\min}}, 0, 1
-\right)
-\]
+```text
+u_i = clip((r_i - r_i,min) / (r_i,max - r_i,min), 0, 1)
+```
 
 이 값을 팔로워 암의 가동 범위로 다시 변환하면 리더와 팔로워의 물리적 범위 차이를 흡수할 수 있다.
 
-\[
-q_i^{F}=q_{i,\min}^{F}+u_i\left(q_{i,\max}^{F}-q_{i,\min}^{F}\right)
-\]
+```text
+q_i^F = q_i,min^F + u_i * (q_i,max^F - q_i,min^F)
+```
 
 위 식은 캘리브레이션의 목적을 설명하기 위한 개념식이다. 실제 변환과 저장 형식은 설치한 LeRobot 버전의 구현을 따른다.
 
@@ -193,11 +191,10 @@ lerobot-teleoperate \
 
 행동복제학습은 사람이 수행한 시연에서 관측값과 행동의 대응 관계를 지도학습으로 학습한다. 시점 `t`에서 전면·손목 카메라 영상, 팔로워 암 관절 상태, 촉각값을 관측 `o_t`로 구성하고, 같은 시점의 리더 암 명령을 목표 행동 `a_t`로 저장하는 방식이다.
 
-\[
-o_t = \left\{I_t^{front}, I_t^{wrist}, q_t, s_t^{skin}\right\},
-\qquad
-D = \left\{(o_t, a_t)\right\}_{t=1}^{N}
-\]
+```text
+o_t = {I_t^front, I_t^wrist, q_t, s_t^skin}
+D = {(o_t, a_t)} for t = 1, ..., N
+```
 
 - `I_t`: 카메라 이미지
 - `q_t`: 팔로워 암의 관절 상태
@@ -206,92 +203,17 @@ D = \left\{(o_t, a_t)\right\}_{t=1}^{N}
 
 연속 관절 행동을 직접 회귀하는 가장 단순한 행동복제 손실은 평균제곱오차로 표현할 수 있다.
 
-\[
-\mathcal{L}_{BC}(\theta)=
-\frac{1}{N}\sum_{t=1}^{N}
-\left\|\pi_{\theta}(o_t)-a_t\right\|_2^2
-\]
+```text
+L_BC(theta) = (1 / N) * sum(||pi_theta(o_t) - a_t||_2^2)
+```
 
 단일 시점 행동만 예측하면 작은 오차가 시간에 따라 누적될 수 있다. 초기 학습 모델로 고려하는 ACT(Action Chunking with Transformers)는 한 시점의 행동 대신 여러 미래 행동으로 구성된 chunk를 예측한다.
 
-\[
-A_t=\left[a_t,a_{t+1},\ldots,a_{t+K-1}\right]
-\]
+```text
+A_t = [a_t, a_(t+1), ..., a_(t+K-1)]
+```
 
 [ACT 원 논문](https://arxiv.org/abs/2304.13705)은 행동 오차의 누적과 사람 시연의 비정상성을 다루기 위해 action chunking을 제안한다. [LeRobot ACT 공식 문서](https://huggingface.co/docs/lerobot/act)에서도 ACT를 저비용 로봇의 정밀 조작을 위한 기본 행동복제 정책으로 안내하고 있다.
-
-### 데이터 수집 명령 초안
-
-아래 명령은 카메라 연결 후 사용할 기록 설정의 초안이다. 카메라 index와 해상도는 실제 장치에서 `lerobot-find-cameras`로 확인한 뒤 수정한다.
-
-```bash
-HF_USER=your_huggingface_id
-
-lerobot-record \
-  --robot.type=so101_follower \
-  --robot.port="$FOLLOWER_PORT" \
-  --robot.id=so101_follower_main \
-  --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, wrist: {type: opencv, index_or_path: 1, width: 640, height: 480, fps: 30} }" \
-  --teleop.type=so101_leader \
-  --teleop.port="$LEADER_PORT" \
-  --teleop.id=so101_leader_main \
-  --dataset.repo_id="${HF_USER}/so101_fragile_pick_place" \
-  --dataset.num_episodes=50 \
-  --dataset.single_task="pick up the fragile object and place it in the tray" \
-  --dataset.streaming_encoding=true \
-  --display_data=true
-```
-
-[LeRobot 실물 로봇 가이드](https://huggingface.co/docs/lerobot/main/en/getting_started_real_world_robot)는 초기 데이터 수집에서 카메라를 고정하고 일관된 파지 방식을 유지한 뒤, 성능이 확보되면 물체 위치와 파지 방법의 변화를 점진적으로 늘리도록 권장한다. 이 프로젝트도 먼저 단일 물체와 제한된 위치에서 성공 궤적을 안정적으로 확보한 뒤 난이도를 높일 계획이다.
-
-### ACT 학습 명령 초안
-
-```bash
-lerobot-train \
-  --dataset.repo_id="${HF_USER}/so101_fragile_pick_place" \
-  --policy.type=act \
-  --output_dir=outputs/train/act_so101_fragile \
-  --job_name=act_so101_fragile \
-  --policy.device=cuda \
-  --wandb.enable=true
-```
-
-## AnySkin 기반 적응형 파지 설계
-
-카메라와 관절 상태만 사용하면 그리퍼가 물체 표면에 실제로 닿았는지, 파지 중 물체가 미끄러지는지를 직접 관측하기 어렵다. [AnySkin 논문](https://arxiv.org/abs/2409.08276)은 교체 가능한 자기식 촉각 센서 구조와 함께 slip detection 및 촉각 기반 policy learning 가능성을 검증했다. 이 프로젝트에서는 AnySkin 신호를 행동복제 정책의 추가 관측값으로 넣고, 별도의 안전 계층에서도 사용할 계획이다.
-
-촉각 센서의 무접촉 기준값을 `s_0`, 현재 측정값을 `s_t`라고 하면 간단한 접촉 특징은 다음과 같이 만들 수 있다.
-
-\[
-\Delta s_t=s_t-s_0,
-\qquad
-c_t=\left\|\Delta s_t\right\|_2
-\]
-
-또한 짧은 시간 동안 촉각 패턴이 빠르게 변하는지를 이용해 미끄러짐 후보 특징을 구성할 수 있다.
-
-\[
-d_t=\left\|\Delta s_t-\Delta s_{t-1}\right\|_2
-\]
-
-다음 코드는 향후 실험할 안전 계층의 개념 예시다. 실제 물체에 적용하기 전에 낮은 속도와 보수적인 임계값으로 검증해야 한다.
-
-```python
-import numpy as np
-
-delta = tactile - tactile_baseline
-contact_level = np.linalg.norm(delta)
-slip_level = np.linalg.norm(delta - previous_delta)
-
-if contact_level > max_contact_level:
-    gripper_target -= release_step
-elif slip_level > slip_threshold:
-    gripper_target += close_step
-
-gripper_target = np.clip(gripper_target, gripper_min, gripper_max)
-```
-
-행동복제 정책이 제안한 그리퍼 명령을 그대로 실행하지 않고 촉각 기반 제한을 마지막에 적용하면, 학습 데이터에서 보지 못한 접촉 상황에서도 과도한 파지를 완화할 수 있다. 단, `contact_level`과 `slip_level`은 곧바로 힘의 절대값을 의미하지 않으므로 물체 종류별 실험을 통해 임계값을 정해야 한다.
 
 ## 다음 단계
 
@@ -313,4 +235,3 @@ gripper_target = np.clip(gripper_target, gripper_min, gripper_max)
 - [Hugging Face LeRobot: Processors for Robots and Teleoperators](https://huggingface.co/docs/lerobot/processors_robots_teleop)
 - [Hugging Face LeRobot: ACT](https://huggingface.co/docs/lerobot/act)
 - [Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware](https://arxiv.org/abs/2304.13705)
-- [AnySkin: Plug-and-play Skin Sensing for Robotic Touch](https://arxiv.org/abs/2409.08276)
