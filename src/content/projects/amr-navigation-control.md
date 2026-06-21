@@ -12,7 +12,7 @@ technologies:
   - MPPI
   - Reinforcement Learning
 outcomes: []
-order: 1
+order: 2
 ---
 
 동적 장애물 예측과 주행 제어를 결합해 AMR의 안전한 경로 생성을 다루는 프로젝트입니다.

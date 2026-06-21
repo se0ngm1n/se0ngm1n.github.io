@@ -11,7 +11,7 @@ technologies:
   - TTS
   - Web UI
 outcomes: []
-order: 2
+order: 3
 ---
 
 시선 선택 인터페이스와 생성형 AI 응답 후보를 결합해 의사소통 보조 흐름을 설계하는 프로젝트입니다.
