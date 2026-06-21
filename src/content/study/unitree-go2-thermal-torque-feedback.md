@@ -22,6 +22,14 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
   <figcaption>같은 속도 명령에서 세 정책의 보행 궤적을 비교한 요약 화면</figcaption>
 </figure>
 
+<figure class="project-media project-media--video">
+  <video controls muted playsinline preload="metadata" poster="/study-media/unitree-go2-thermal-torque-feedback/05-gait-compare.png">
+    <source src="/study-media/unitree-go2-thermal-torque-feedback/videos/01-ppt-video.mp4" type="video/mp4" />
+    브라우저에서 동영상을 재생할 수 없습니다.
+  </video>
+  <figcaption>PPT 원본 보행 비교 영상</figcaption>
+</figure>
+
 ## 1. 서론
 
 사족보행 로봇은 다양한 지형에서 이동성이 높아 점검, 운송, 탐사 분야에 활용 가능성이 크다. 최근에는 강화학습을 이용해 복잡한 보행 정책을 학습하는 연구가 활발하며, 명령 속도 추종, 자세 안정성, 보행 리듬 등을 보상함수로 설계해 안정적인 locomotion policy를 얻는 방식이 널리 사용된다. 그러나 고속 또는 장시간 보행 상황에서는 특정 관절 구동기에 토크 부하가 집중될 수 있고, 이는 모터 손실과 온도 상승으로 이어져 보행 성능과 안정성에 영향을 준다.
@@ -126,11 +134,15 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
 
 모터의 열 입력은 토크 제곱 기반의 구리손실, 속도 기반 마찰손실, Coulomb-type 손실, 그리고 모터 그룹별 bias 발열을 합산하여 다음과 같이 나타낼 수 있다.
 
+### Torque → Heat
+
 <div class="formula-block formula-block--stacked" role="math" aria-label="motor heat input equation">
   <span><var>P</var><sub>heat,i</sub> = <var>k</var><sub>τ,25</sub>[1 + <var>α</var><sub>Cu</sub>(<var>T</var><sub>i</sub> - <var>T</var><sub>ref</sub>)]<var>τ</var><sub>i</sub><sup>2</sup> + <var>b</var><sub>v</sub><var>ω</var><sub>i</sub><sup>2</sup> + <var>τ</var><sub>c</sub>|<var>ω</var><sub>i</sub>| + <var>P</var><sub>bias,g(i)</sub></span>
 </div>
 
 여기서 `tau_i`와 `omega_i`는 각각 i번째 관절의 토크와 각속도이며, `T_i`는 해당 모터 온도이다. `g(i)`는 i번째 모터가 속한 motor group을 의미하며, 본 연구에서는 Hip, Thigh, Calf 그룹으로 나누어 열 특성을 fitting하였다.
+
+### Heat → Motor Heat
 
 <div class="formula-block formula-block--stacked" role="math" aria-label="motor temperature transition equation">
   <span><var>T</var><sub>i</sub>(t + Δt) = <var>T</var><sub>amb</sub> + e<sup>-Δt / <var>τ</var><sub>th,g(i)</sub></sup>[<var>T</var><sub>i</sub>(t) - <var>T</var><sub>amb</sub>] + <var>R</var><sub>th,g(i)</sub>(1 - e<sup>-Δt / <var>τ</var><sub>th,g(i)</sub></sup>)<var>P</var><sub>heat,i</sub></span>
@@ -186,6 +198,14 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
   <figcaption>Thermal 정책이 단독 온도 보상만으로는 불안정해지는 이유</figcaption>
 </figure>
 
+<figure class="project-media project-media--video">
+  <video controls muted playsinline preload="metadata" poster="/study-media/unitree-go2-thermal-torque-feedback/11-straightness-compare.png">
+    <source src="/study-media/unitree-go2-thermal-torque-feedback/videos/02-ppt-video.mp4" type="video/mp4" />
+    브라우저에서 동영상을 재생할 수 없습니다.
+  </video>
+  <figcaption>PPT 원본 직진성 비교 영상</figcaption>
+</figure>
+
 ## 5. 결과 및 해석
 
 ### 20분 보행 결과
@@ -210,6 +230,14 @@ Baseline 정책은 1542 m를 이동하였고, 평균 속도는 1.285 m/s, 최대
     <figcaption>실험 결과를 한 장으로 정리한 결론 화면</figcaption>
   </figure>
 </div>
+
+<figure class="project-media project-media--video">
+  <video controls muted playsinline preload="metadata" poster="/study-media/unitree-go2-thermal-torque-feedback/16-final-summary.png">
+    <source src="/study-media/unitree-go2-thermal-torque-feedback/videos/03-ppt-video.mp4" type="video/mp4" />
+    브라우저에서 동영상을 재생할 수 없습니다.
+  </video>
+  <figcaption>PPT 원본 최종 요약 영상</figcaption>
+</figure>
 
 ### 국소 열위험 보조 지표
 
