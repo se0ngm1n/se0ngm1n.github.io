@@ -14,7 +14,7 @@ outcomes: []
 order: 0
 ---
 
-## 1. 활동 개요 (500자 내외)
+## 프로젝트 내용
 
 본 활동은 파손되기 쉽거나 내용물 유출 시 위험이 발생할 수 있는 소형 물품을 로봇팔이 안전하게 집고 전달할 수 있도록 하는 자기주도 프로젝트이다. SO-ARM101 로봇암과 리더 암을 활용하여 사람이 물체를 조심스럽게 집고 옮기는 시연 데이터를 수집하고, 이를 행동복제 학습에 적용하여 로봇팔의 접근, 파지, 이송 동작을 구현한다. 또한 그리퍼 접촉부에는 소프트 패드와 AnySkin 기반 촉각센서를 적용하여 물체와의 접촉 상태를 확인하고, 과도한 파지나 미끄러짐을 줄이는 적응형 파지 방식을 실험한다.
 
@@ -22,4 +22,4 @@ order: 0
 
 ## 진행현황
 
-[SO-ARM 101 Project Part 1-로봇 조립, Calibraion, Teleoperation 보기](/study/so-arm-101-manipulator-part-1/)
+[\[Part 1\] 로봇 조립, Calibraion, Teleoperation 보기](/study/so-arm-101-manipulator-part-1/)
