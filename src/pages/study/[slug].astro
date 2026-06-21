@@ -148,4 +148,41 @@ if (isCollectionPost) {
     color: var(--soft);
     user-select: none;
   }
+
+  .study-content :global(.project-media) {
+    margin: 22px 0;
+  }
+
+  .study-content :global(.project-media-grid) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 22px 0;
+    align-items: start;
+  }
+
+  .study-content :global(.project-media-grid .project-media) {
+    margin: 0;
+  }
+
+  .study-content :global(.project-media img),
+  .study-content :global(.project-media video) {
+    width: 100%;
+    margin: 0 auto;
+    background: #000000;
+  }
+
+  .study-content :global(.project-media figcaption) {
+    margin-top: 8px;
+    color: var(--soft);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .study-content :global(.project-media-grid) {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
