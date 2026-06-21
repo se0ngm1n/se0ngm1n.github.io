@@ -79,14 +79,11 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
 
 전체 보상은 다음과 같은 형태로 정리할 수 있다.
 
-$$
-r_{\mathrm{total}}
-= r_{\mathrm{locomotion}}
- + \lambda_T r_{\mathrm{thermal}}
- + \lambda_\tau r_{\mathrm{torque}}
-$$
+<div class="formula-block formula-block--stacked" role="math" aria-label="total reward composed of locomotion thermal and torque terms">
+  <span><var>r</var><sub>total</sub> = <var>r</var><sub>locomotion</sub> + <var>λ</var><sub>T</sub><var>r</var><sub>thermal</sub> + <var>λ</var><sub>τ</sub><var>r</var><sub>torque</sub></span>
+</div>
 
-여기서 \(r_{\mathrm{locomotion}}\)은 기본 보행 성능 보상, \(r_{\mathrm{thermal}}\)은 온도 상승 억제 보상, \(r_{\mathrm{torque}}\)는 과도한 토크 또는 부하 집중에 대한 패널티이다. Baseline은 \(r_{\mathrm{locomotion}}\)만 사용하고, Thermal Feedback은 \(r_{\mathrm{thermal}}\)을 추가하며, Thermal-Torque Feedback은 \(r_{\mathrm{thermal}}\)과 \(r_{\mathrm{torque}}\)를 함께 사용한다.
+여기서 `r_locomotion`은 기본 보행 성능 보상, `r_thermal`은 온도 상승 억제 보상, `r_torque`는 과도한 토크 또는 부하 집중에 대한 패널티이다. Baseline은 `r_locomotion`만 사용하고, Thermal Feedback은 `r_thermal`을 추가하며, Thermal-Torque Feedback은 `r_thermal`과 `r_torque`를 함께 사용한다.
 
 <figure class="project-media">
   <img src="/study-media/unitree-go2-thermal-torque-feedback/04-reward-hacking.png" alt="보상 해킹의 예시를 보여주는 도식" loading="lazy" decoding="async" />
@@ -129,33 +126,19 @@ $$
 
 모터의 열 입력은 토크 제곱 기반의 구리손실, 속도 기반 마찰손실, Coulomb-type 손실, 그리고 모터 그룹별 bias 발열을 합산하여 다음과 같이 나타낼 수 있다.
 
-$$
-P_{\mathrm{heat},i}
-= k_{\tau,25}\left[1+\alpha_{\mathrm{Cu}}(T_i-T_{\mathrm{ref}})\right]\tau_i^2
-+ b_v \omega_i^2
-+ \tau_c |\omega_i|
-+ P_{\mathrm{bias},g(i)}
-$$
+<div class="formula-block formula-block--stacked" role="math" aria-label="motor heat input equation">
+  <span><var>P</var><sub>heat,i</sub> = <var>k</var><sub>τ,25</sub>[1 + <var>α</var><sub>Cu</sub>(<var>T</var><sub>i</sub> - <var>T</var><sub>ref</sub>)]<var>τ</var><sub>i</sub><sup>2</sup> + <var>b</var><sub>v</sub><var>ω</var><sub>i</sub><sup>2</sup> + <var>τ</var><sub>c</sub>|<var>ω</var><sub>i</sub>| + <var>P</var><sub>bias,g(i)</sub></span>
+</div>
 
-여기서 \(\tau_i\)와 \(\omega_i\)는 각각 i번째 관절의 토크와 각속도이며, \(T_i\)는 해당 모터 온도이다. \(g(i)\)는 i번째 모터가 속한 motor group을 의미하며, 본 연구에서는 Hip, Thigh, Calf 그룹으로 나누어 열 특성을 fitting하였다.
+여기서 `tau_i`와 `omega_i`는 각각 i번째 관절의 토크와 각속도이며, `T_i`는 해당 모터 온도이다. `g(i)`는 i번째 모터가 속한 motor group을 의미하며, 본 연구에서는 Hip, Thigh, Calf 그룹으로 나누어 열 특성을 fitting하였다.
 
-$$
-T_i(t + \Delta t)
-= T_{\mathrm{amb}}
-+ e^{-\Delta t/\tau_{\mathrm{th},g(i)}}\left[T_i(t)-T_{\mathrm{amb}}\right]
-+ R_{\mathrm{th},g(i)}\left(1-e^{-\Delta t/\tau_{\mathrm{th},g(i)}}\right)P_{\mathrm{heat},i}
-$$
+<div class="formula-block formula-block--stacked" role="math" aria-label="motor temperature transition equation">
+  <span><var>T</var><sub>i</sub>(t + Δt) = <var>T</var><sub>amb</sub> + e<sup>-Δt / <var>τ</var><sub>th,g(i)</sub></sup>[<var>T</var><sub>i</sub>(t) - <var>T</var><sub>amb</sub>] + <var>R</var><sub>th,g(i)</sub>(1 - e<sup>-Δt / <var>τ</var><sub>th,g(i)</sub></sup>)<var>P</var><sub>heat,i</sub></span>
+</div>
 
-$$
-P_{\mathrm{load}}
-= P_{\mathrm{base}}
-+ \sum_i \left[
-\frac{\max(\tau_i \omega_i,0)}{\eta_{\mathrm{drive}}}
-+ k_{\tau,25}\tau_i^2
-+ b_v \omega_i^2
-+ \tau_c |\omega_i|
-\right]
-$$
+<div class="formula-block formula-block--stacked" role="math" aria-label="load power equation">
+  <span><var>P</var><sub>load</sub> = <var>P</var><sub>base</sub> + Σ<sub>i</sub>[max(<var>τ</var><sub>i</sub><var>ω</var><sub>i</sub>, 0) / <var>η</var><sub>drive</sub> + <var>k</var><sub>τ,25</sub><var>τ</var><sub>i</sub><sup>2</sup> + <var>b</var><sub>v</sub><var>ω</var><sub>i</sub><sup>2</sup> + <var>τ</var><sub>c</sub>|<var>ω</var><sub>i</sub>|]</span>
+</div>
 
 이 모델의 목적은 모터 내부 권선 온도를 정밀하게 예측하는 것보다, 정책 평가에서 torque/load가 motor temperature rise와 energy consumption으로 연결되는 경로를 해석하는 데 있다. 따라서 본 연구에서는 해당 모델을 통해 단순한 온도 피드백보다 토크/부하를 함께 고려한 보상 설계가 필요한 이유를 물리적으로 설명하였다.
 
