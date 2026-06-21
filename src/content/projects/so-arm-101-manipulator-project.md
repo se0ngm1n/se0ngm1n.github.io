@@ -1,6 +1,6 @@
 ---
 title: "파손 민감 위험 물품의 안전한 전달을 위한 촉각 센서 기반 행동복제 학습 메니퓰레이터 시스템"
-subtitle: "SO-ARM 101 Manipulator Project"
+subtitle: "SO-ARM 101 Manipulator 파지 제어 프로젝트"
 period: "2026.06 - Present"
 category: "Manipulator · Tactile Sensing · Imitation Learning"
 summary: "촉각센서와 행동복제 학습을 활용해 파손되기 쉽거나 위험한 소형 물품을 안전하게 파지하고 전달하는 매니퓰레이터 시스템"
@@ -22,4 +22,4 @@ order: 0
 
 ## 진행현황
 
-[\[SO-ARM 101 Manipulator Project Part 1\] 로봇 조립, Calibration, Teleoperation 보기](/study/so-arm-101-manipulator-part-1/)
+[SO-ARM 101 Project Part 1-로봇 조립, Calibraion, Teleoperation 보기](/study/so-arm-101-manipulator-part-1/)
