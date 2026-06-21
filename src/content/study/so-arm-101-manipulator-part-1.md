@@ -103,7 +103,7 @@ lerobot-setup-motors \
 
 조립 시작, 천천히 유튜브 보면서 하니 아이디 부여하고 조립하고 캘리브레이션까지 4시간 정도 걸린 것 같다
 
-조립 과정에서는 링크 방향과 서보모터의 초기 위치가 잘못 맞물리지 않도록 확인했다. 모터의 최대 최소 가동 구간을 확인하여 리더암과 팔로우 암의 움직임을 맞춰주고, 배선이 당겨지거나 조립에 이상이 있는지도 확인하였다.
+조립 과정에서는 링크 방향과 서보모터의 초기 위치가 잘못 맞물리지 않도록 확인했다. 모터의 최대 최소 가동 구간을 확인하여 리더암과 팔로우 암의 움직임을 맞춰 주기 위한 준비를 하고, 배선이 당겨지거나 조립에 이상이 있는지도 확인하였다.
 
 <figure class="project-media project-media--video">
   <video controls muted playsinline preload="metadata" poster="/study-media/so-arm-101-part-1/video-02-poster.jpg">
@@ -135,15 +135,20 @@ lerobot-setup-motors \
 
 개념적으로 관절 `i`의 원시 위치 `r_i`를 0과 1 사이의 값으로 정규화하면 다음과 같이 표현할 수 있다.
 
-```text
-u_i = clip((r_i - r_i,min) / (r_i,max - r_i,min), 0, 1)
-```
+<div class="formula-block" role="math" aria-label="u i equals clip of normalized motor position between zero and one">
+  <span><var>u</var><sub>i</sub> = clip(</span>
+  <span class="formula-fraction">
+    <span><var>r</var><sub>i</sub> - <var>r</var><sub>i,min</sub></span>
+    <span><var>r</var><sub>i,max</sub> - <var>r</var><sub>i,min</sub></span>
+  </span>
+  <span>, 0, 1)</span>
+</div>
 
 이 값을 팔로워 암의 가동 범위로 다시 변환하면 리더와 팔로워의 물리적 범위 차이를 흡수할 수 있다.
 
-```text
-q_i^F = q_i,min^F + u_i * (q_i,max^F - q_i,min^F)
-```
+<div class="formula-block" role="math" aria-label="follower joint position converted from normalized leader joint position">
+  <span><var>q</var><sub>i</sub><sup>F</sup> = <var>q</var><sub>i,min</sub><sup>F</sup> + <var>u</var><sub>i</sub>(<var>q</var><sub>i,max</sub><sup>F</sup> - <var>q</var><sub>i,min</sub><sup>F</sup>)</span>
+</div>
 
 위 식은 캘리브레이션의 목적을 설명하기 위한 개념식이다. 실제 변환과 저장 형식은 설치한 LeRobot 버전의 구현을 따른다.
 
@@ -191,10 +196,10 @@ lerobot-teleoperate \
 
 행동복제학습은 사람이 수행한 시연에서 관측값과 행동의 대응 관계를 지도학습으로 학습한다. 시점 `t`에서 전면·손목 카메라 영상, 팔로워 암 관절 상태, 촉각값을 관측 `o_t`로 구성하고, 같은 시점의 리더 암 명령을 목표 행동 `a_t`로 저장하는 방식이다.
 
-```text
-o_t = {I_t^front, I_t^wrist, q_t, s_t^skin}
-D = {(o_t, a_t)} for t = 1, ..., N
-```
+<div class="formula-block formula-block--stacked" role="math" aria-label="observation and demonstration dataset definitions">
+  <span><var>o</var><sub>t</sub> = { <var>I</var><sub>t</sub><sup>front</sup>, <var>I</var><sub>t</sub><sup>wrist</sup>, <var>q</var><sub>t</sub>, <var>s</var><sub>t</sub><sup>skin</sup> }</span>
+  <span><var>D</var> = { (<var>o</var><sub>t</sub>, <var>a</var><sub>t</sub>) }<sub>t=1</sub><sup>N</sup></span>
+</div>
 
 - `I_t`: 카메라 이미지
 - `q_t`: 팔로워 암의 관절 상태
@@ -203,15 +208,17 @@ D = {(o_t, a_t)} for t = 1, ..., N
 
 연속 관절 행동을 직접 회귀하는 가장 단순한 행동복제 손실은 평균제곱오차로 표현할 수 있다.
 
-```text
-L_BC(theta) = (1 / N) * sum(||pi_theta(o_t) - a_t||_2^2)
-```
+<div class="formula-block" role="math" aria-label="behavior cloning mean squared error loss">
+  <span><var>L</var><sub>BC</sub>(θ) =</span>
+  <span class="formula-fraction"><span>1</span><span><var>N</var></span></span>
+  <span>∑<sub>t=1</sub><sup>N</sup> ‖π<sub>θ</sub>(<var>o</var><sub>t</sub>) - <var>a</var><sub>t</sub>‖<sub>2</sub><sup>2</sup></span>
+</div>
 
 단일 시점 행동만 예측하면 작은 오차가 시간에 따라 누적될 수 있다. 초기 학습 모델로 고려하는 ACT(Action Chunking with Transformers)는 한 시점의 행동 대신 여러 미래 행동으로 구성된 chunk를 예측한다.
 
-```text
-A_t = [a_t, a_(t+1), ..., a_(t+K-1)]
-```
+<div class="formula-block" role="math" aria-label="action chunk from time t to t plus K minus one">
+  <span><var>A</var><sub>t</sub> = [ <var>a</var><sub>t</sub>, <var>a</var><sub>t+1</sub>, ..., <var>a</var><sub>t+K-1</sub> ]</span>
+</div>
 
 [ACT 원 논문](https://arxiv.org/abs/2304.13705)은 행동 오차의 누적과 사람 시연의 비정상성을 다루기 위해 action chunking을 제안한다. [LeRobot ACT 공식 문서](https://huggingface.co/docs/lerobot/act)에서도 ACT를 저비용 로봇의 정밀 조작을 위한 기본 행동복제 정책으로 안내하고 있다.
 

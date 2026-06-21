@@ -180,9 +180,58 @@ if (isCollectionPost) {
     text-align: center;
   }
 
+  .study-content :global(.formula-block) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    margin: 18px 0;
+    padding: 18px;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--panel-2);
+    font-family: "Times New Roman", Times, serif;
+    font-size: clamp(1rem, 2.3vw, 1.2rem);
+    line-height: 1.45;
+    white-space: nowrap;
+  }
+
+  .study-content :global(.formula-block--stacked) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .study-content :global(.formula-fraction) {
+    display: inline-grid;
+    grid-template-rows: auto auto;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .study-content :global(.formula-fraction > span:first-child) {
+    padding: 0 0.28em 0.12em;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .study-content :global(.formula-fraction > span:last-child) {
+    padding: 0.12em 0.28em 0;
+  }
+
+  .study-content :global(.formula-block sub),
+  .study-content :global(.formula-block sup) {
+    font-size: 0.68em;
+    line-height: 0;
+  }
+
   @media (max-width: 640px) {
     .study-content :global(.project-media-grid) {
       grid-template-columns: 1fr;
+    }
+
+    .study-content :global(.formula-block) {
+      justify-content: flex-start;
+      padding: 14px;
     }
   }
 </style>
