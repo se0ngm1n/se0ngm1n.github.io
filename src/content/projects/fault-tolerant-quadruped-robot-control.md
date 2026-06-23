@@ -9,7 +9,8 @@ technologies:
   - "Isaac Sim"
   - "Robotics"
   - "Simulation"
-outcomes: []
+outcomes:
+  - "2026년도 1학기 졸업 프로젝트로 진행"
 order: 1
 ---
 
