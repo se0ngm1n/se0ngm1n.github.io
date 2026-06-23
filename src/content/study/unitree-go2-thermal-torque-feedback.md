@@ -36,6 +36,11 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
 
 그러나 이러한 기본 보상만으로는 장시간 또는 고속 보행 중 특정 관절에 발생하는 지속적인 토크 부하와 온도 상승을 직접적으로 제어하기 어렵다. 따라서 본 연구에서는 기본 보행 정책을 기준선으로 두고, 온도 상태를 반영한 정책과 토크 부하까지 함께 반영한 정책을 비교하였다.
 
+<figure class="project-media">
+  <img src="/study-media/unitree-go2-thermal-torque-feedback/06-dataflow.png" alt="관측값과 행동, 정책 학습으로 이어지는 데이터 흐름" loading="lazy" decoding="async" />
+  <figcaption>정책 강화학습 진행하는 모습</figcaption>
+</figure>
+
 ### 비교 정책 구성
 
 본 연구에서는 Baseline, Thermal Feedback, Thermal-Torque Feedback의 세 정책을 비교하였다. Baseline 정책은 속도 추종과 자세 안정성을 중심으로 학습되며 motor temperature를 직접 관측하지 않는다. Thermal Feedback 정책은 motor temperature, thermal margin, hotspot 정보를 추가로 사용하여 온도 상승을 억제하도록 설계하였다. Thermal-Torque Feedback 정책은 온도 상태뿐 아니라 발열의 원인이 되는 torque/load 부담을 함께 고려하여 고온 actuator에 큰 토크가 집중되는 현상을 억제하도록 설계하였다.
@@ -91,7 +96,7 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
 
 본 연구에서는 강화학습 정책의 열적 특성을 해석하기 위해 Unitree Go2의 sim-to-real 보행 과정에서 수집한 low-level 데이터를 사용하였다. 로봇의 상태와 명령은 ROS bag 형태로 저장하였으며, 주요 topic은 `/lowstate`와 `/lowcmd`이다. 원본 raw rosbag directory는 총 30개였고, 이 중 분석에 사용할 수 있도록 policy joint order에 맞추어 변환한 low-state CSV는 24개이다.
 
-각 데이터는 약 10분에서 50분 동안 수집되었으며, 분석에는 실제 보행이 이루어진 active walking 구간을 중심으로 10분 window를 사용하였다. 최종적으로 20개의 train window와 4개의 test window를 구성하였고, 속도 조건은 0.5-1.5 m/s 범위의 실험 metadata를 기준으로 정리하였다. 이러한 전처리는 실제 모터 순서와 강화학습 policy에서 사용하는 joint order를 일치시키고, 토크, 각속도, 온도, 배터리 상태를 동일한 시간축에서 비교하기 위해 수행하였다.
+각 데이터는 약 10분에서 50분 동안 수집되었으며, 분석에는 실제 보행이 이루어진 active walking 구간을 중심으로 10분 window를 잘라서 사용하였다. 최종적으로 20개의 train window와 4개의 test window를 구성하였고, 속도 조건은 0.5-1.5 m/s 범위의 실험 metadata를 기준으로 정리하였다. 이러한 전처리는 실제 모터 순서와 강화학습 policy에서 사용하는 joint order를 일치시키고, 토크, 각속도, 온도, 배터리 상태를 동일한 시간축에서 비교하기 위해 수행하였다.
 
 사용한 데이터 항목은 총 52개로 구성된다. 12개 모터에 대해 관절 위치 `q`, 관절 속도 `dq`, 추정 토크 `tau_est`, motor temperature를 사용하여 48개 motor telemetry를 구성하였다. 여기에 battery voltage, battery current, BMS SOC 관련 항목을 추가하여 전체 구동 전력과 배터리 상태를 함께 해석할 수 있도록 하였다.
 
@@ -103,16 +108,6 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
 <figure class="project-media">
   <img src="/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.png" alt="실외 바닥 위에 놓인 Unitree Go2와 연결 케이블" loading="lazy" decoding="async" />
   <figcaption>실험 환경과 로봇 연결 상태 확인</figcaption>
-</figure>
-
-<figure class="project-media">
-  <img src="/study-media/unitree-go2-thermal-torque-feedback/08-rosbag-preprocess.png" alt="rosbag 데이터를 lowstate CSV로 정리하는 전처리 개요" loading="lazy" decoding="async" />
-  <figcaption>rosbag 데이터를 학습 가능한 형식으로 정리하는 전처리 흐름</figcaption>
-</figure>
-
-<figure class="project-media">
-  <img src="/study-media/unitree-go2-thermal-torque-feedback/06-dataflow.png" alt="관측값과 행동, 정책 학습으로 이어지는 데이터 흐름" loading="lazy" decoding="async" />
-  <figcaption>관측값, 행동, 학습 데이터셋으로 이어지는 전체 흐름</figcaption>
 </figure>
 
 ### 열-부하 해석 모델
@@ -175,16 +170,6 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
   </figure>
 </div>
 
-<figure class="project-media">
-  <img src="/study-media/unitree-go2-thermal-torque-feedback/13-result-yaw.png" alt="세 정책의 보행 궤적과 yaw drift를 보여주는 비교 화면" loading="lazy" decoding="async" />
-  <figcaption>같은 속도 명령에서 세 정책의 보행 궤적과 yaw drift를 비교한 화면</figcaption>
-</figure>
-
-<figure class="project-media">
-  <img src="/study-media/unitree-go2-thermal-torque-feedback/14-reason-analysis.png" alt="Thermal 정책의 성능이 낮은 이유를 설명하는 분석 화면" loading="lazy" decoding="async" />
-  <figcaption>Thermal 정책이 단독 온도 보상만으로는 불안정해지는 이유</figcaption>
-</figure>
-
 <figure class="project-media project-media--video">
   <video controls muted playsinline preload="metadata" poster="/study-media/unitree-go2-thermal-torque-feedback/11-straightness-compare.png">
     <source src="/study-media/unitree-go2-thermal-torque-feedback/videos/02-ppt-video.mp4" type="video/mp4" />
@@ -202,6 +187,10 @@ Baseline 정책은 1542 m를 이동하였고, 평균 속도는 1.285 m/s, 최대
 정량 결과는 열 피드백이 속도를 끌어올릴 수는 있어도, 그것이 곧 좋은 보행 성능을 뜻하지는 않는다는 점을 보여준다. Thermal Feedback 정책은 가장 빠르게 이동했지만 열 부담과 에너지 사용량이 크게 증가하였다. 이는 온도 상태만을 보상에 포함하는 방식이 actuator load를 균형 있게 분산시키지 못할 수 있음을 의미한다.
 
 ### 10 m 직진성 결과
+<figure class="project-media">
+  <img src="/study-media/unitree-go2-thermal-torque-feedback/14-reason-analysis.png" alt="Thermal 정책의 성능이 낮은 이유를 설명하는 분석 화면" loading="lazy" decoding="async" />
+  <figcaption>Thermal 정책이 단독 온도 보상만으로는 불안정해지는 이유</figcaption>
+</figure>
 
 10 m 직진성 실험에서는 Baseline 정책이 lateral drift +0.502 m, yaw drift +2.73 deg를 보였고, final lateral abs와 final yaw abs는 각각 0.515 m, 2.92 deg였다. Thermal Feedback 정책은 lateral drift -1.255 m, yaw drift -18.22 deg로 방향 안정성이 크게 저하되었으며, final lateral abs와 final yaw abs도 각각 1.311 m, 18.21 deg로 증가하였다. 반면 Thermal-Torque Feedback 정책은 lateral drift -0.065 m, yaw drift -0.34 deg를 보였고, final lateral abs와 final yaw abs는 각각 0.065 m, 0.49 deg로 가장 작았다.
 
@@ -210,11 +199,11 @@ Baseline 정책은 1542 m를 이동하였고, 평균 속도는 1.285 m/s, 최대
 <div class="project-media-grid">
   <figure class="project-media">
     <img src="/study-media/unitree-go2-thermal-torque-feedback/15-final-table.jpeg" alt="최종 결과표" loading="lazy" decoding="async" />
-    <figcaption>최종 수치 비교표</figcaption>
+    <figcaption>정책별 보행 모습 상단 뷰</figcaption>
   </figure>
   <figure class="project-media">
     <img src="/study-media/unitree-go2-thermal-torque-feedback/16-final-summary.png" alt="최종 결론을 요약한 화면" loading="lazy" decoding="async" />
-    <figcaption>실험 결과를 한 장으로 정리한 결론 화면</figcaption>
+    <figcaption>정책별 보행 모습 사진 </figcaption>
   </figure>
 </div>
 
@@ -223,7 +212,7 @@ Baseline 정책은 1542 m를 이동하였고, 평균 속도는 1.285 m/s, 최대
     <source src="/study-media/unitree-go2-thermal-torque-feedback/videos/03-ppt-video.mp4" type="video/mp4" />
     브라우저에서 동영상을 재생할 수 없습니다.
   </video>
-  <figcaption>PPT 원본 최종 요약 영상</figcaption>
+  <figcaption>정책별 보행 모습</figcaption>
 </figure>
 
 ### 국소 열위험 보조 지표
@@ -247,10 +236,6 @@ Torque-aware regularization은 이러한 문제를 줄이는 physical regularize
 반면 Thermal-Torque Feedback 정책은 온도 상태와 함께 torque/load 부담을 보상함수에 반영함으로써 10 m 직진 실험에서 final lateral drift 0.065 m, final yaw drift 0.49 deg로 가장 작은 방향 오차를 보였다. 또한 20분 보행 실험에서도 Thermal Feedback 대비 에너지 사용량과 최대 모터 온도를 낮추어, 보행 안정성과 열 부담 사이의 균형을 개선하였다. 따라서 사족보행 로봇의 thermal-aware locomotion을 위해서는 온도 상태를 단순히 추가하는 것보다, 발열을 유발하는 물리적 원인을 보상 설계에 함께 반영하는 것이 중요하다.
 
 향후 연구에서는 동일한 초기 온도, 배터리 상태, 지면 조건, command sequence를 통제한 실로봇 장시간 반복 실험이 필요하다. 또한 장기 thermal state를 더 잘 반영하기 위해 recurrent policy 또는 thermal state estimator를 결합하는 방법을 검토할 수 있다.
-
-## 후기
-
-본 연구는 2026학년도 종합설계 교과목의 일환으로 수행되었으며, 연구 진행 과정에서 지도와 조언을 주신 김남수 교수님께 감사드립니다.
 
 ## 참고문헌
 
