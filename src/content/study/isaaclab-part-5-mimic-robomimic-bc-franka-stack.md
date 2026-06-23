@@ -4,16 +4,18 @@ date: 2026-06-02
 category: "Isaac Lab"
 summary: "Isaac Lab 공식 Franka cube stacking demonstration을 사용해 Mimic annotation, 추가 demonstration 생성, Robomimic BC-RNN 학습, checkpoint 확인까지 이어지는 흐름을 정리한다."
 tags:
-  - Isaac Sim
-  - Isaac Lab
-  - Imitation Learning
-  - Behavior Cloning
-  - Robomimic
-  - Franka
+  - "Isaac Sim"
+  - "Isaac Lab"
+  - "Imitation Learning"
+  - "Behavior Cloning"
+  - "Robomimic"
+  - "Franka"
 thumbnail: "/study-media/isaaclab-bc-franka/franka-stack-official.jpg"
 ---
 
 ## 들어가며
+
+![ Isaac Lab Part 5  Mimic과 Robomimic으로 Franka Cube Stacking BC 학습하기](/study-media/isaaclab-part-5-mimic-robomimic-bc-franka-stack/1.png)
 
 로봇에게 작업을 학습시키는 방법은 보상 기반 강화학습만 있는 것이 아니다. 사람이 성공적으로 수행한 시연을 데이터로 삼아, 같은 상황에서 비슷한 행동을 내도록 policy를 학습시키는 **모방 학습(Imitation Learning)**도 중요한 접근이다.
 
