@@ -2,7 +2,7 @@
 title: "토크-열 피드백 보상 설계를 통한 강화학습 기반 사족보행 안정성 향상"
 date: 2026-06-21
 category: "Quadruped Project"
-summary: "Unitree Go2 기반 MuJoCo 사족보행 실험에서 Thermal에만 패널티를 준 정책과 Thermal+Torque에 함께 패널티를 준 정책의 열 안정성과 직진성을 비교하여 적절한 보상함수 설계의 필요성을 확인한 프로젝트,"
+summary: "Unitree Go2 기반 MuJoCo 사족보행 실험에서 Thermal에만 패널티를 준 정책과 Thermal+Torque에 함께 패널티를 준 정책의 열 안정성과 직진성을 비교하여 적절한 보상함수 설계의 필요성을 확인한 프로젝트"
 tags:
   - "Unitree Go2"
   - "Reinforcement Learning"
