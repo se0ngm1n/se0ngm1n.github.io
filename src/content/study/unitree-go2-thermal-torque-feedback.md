@@ -136,11 +136,6 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
 
 이 모델의 목적은 모터 내부 권선 온도를 정밀하게 예측하는 것보다, 정책 평가에서 torque/load가 motor temperature rise와 energy consumption으로 연결되는 경로를 해석하는 데 있다. 따라서 본 연구에서는 해당 모델을 통해 단순한 온도 피드백보다 토크/부하를 함께 고려한 보상 설계가 필요한 이유를 물리적으로 설명하였다.
 
-<figure class="project-media">
-  <img src="/study-media/unitree-go2-thermal-torque-feedback/09-thermal-model.png" alt="토크, 열입력, 온도 예측을 연결한 수식 정리" loading="lazy" decoding="async" />
-  <figcaption>토크에서 열 입력, 그리고 온도 예측으로 이어지는 모델 정리</figcaption>
-</figure>
-
 ## 4. 실험 조건 및 평가 지표
 
 ### 실험 조건
