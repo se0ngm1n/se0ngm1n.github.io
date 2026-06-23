@@ -170,7 +170,7 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
     <source src="/study-media/unitree-go2-thermal-torque-feedback/videos/02-ppt-video.mp4" type="video/mp4" />
     브라우저에서 동영상을 재생할 수 없습니다.
   </video>
-  <figcaption>PPT 원본 직진성 비교 영상</figcaption>
+  <figcaption> 정책별 직진성 비교 영상</figcaption>
 </figure>
 
 ## 5. 결과 및 해석
