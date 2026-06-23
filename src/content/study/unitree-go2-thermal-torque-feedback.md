@@ -2,32 +2,24 @@
 title: "토크-열 피드백 보상 설계를 통한 강화학습 기반 사족보행 안정성 향상"
 date: 2026-06-21
 category: "Quadruped Project"
-summary: "Unitree Go2/MuJoCo 사족보행 실험에서 Baseline, Thermal Feedback, Thermal-Torque Feedback를 비교하고 열 안정성과 직진성을 함께 정리한 종합설계 보고서 요약"
+summary: "Unitree Go2 기반 MuJoCo 사족보행 실험에서 Thermal에만 패널티를 준 정책과 Thermal+Torque에 함께 패널티를 준 정책의 열 안정성과 직진성을 비교하여 적절한 보상함수 설계의 필요성을 확인한 프로젝트,"
 tags:
-  - Unitree Go2
-  - Reinforcement Learning
-  - Reward Design
-  - Thermal Feedback
-  - Quadruped
-  - MuJoCo
+  - "Unitree Go2"
+  - "Reinforcement Learning"
+  - "Reward Design"
+  - "Thermal Feedback"
+  - "Quadruped"
+  - "MuJoCo"
 thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.png"
 ---
 
-## 초록
+## 프로젝트 개요
 
-본 연구는 강화학습 기반 사족보행에서 온도 피드백 보상 설계가 보행 안정성에 미치는 영향을 분석하고, 토크 부하를 함께 고려한 토크-열 피드백 보상 구조를 제안한다. Baseline, Thermal Feedback, Thermal-Torque Feedback 정책을 Unitree Go2/MuJoCo 환경의 1.5 m/s 조건에서 비교하였다. 단순 온도 피드백 정책은 평균 속도는 증가하였으나 10 m 직진 시 lateral drift와 yaw drift가 크게 증가하여 방향 안정성이 저하되었다. 반면 토크-열 피드백 정책은 final lateral drift 0.065 m, final yaw drift 0.49 deg로 가장 안정적인 직진 보행을 보였다. 이를 통해 사족보행의 열적 안정성 개선에는 온도 상태뿐 아니라 발열 원인인 토크/부하를 함께 반영한 보상 설계가 필요함을 확인하였다.
-
+강화학습 기반 사족보행에서 온도만 고려한 피드백 보상 설계가 보행 안정성에 미치는 영향을 분석하고, 토크 부하를 함께 고려한 토크-열 피드백 보상 구조와의 비교를 진행하여, 적절한 보상함수 설계의 필요성을 확인한 프로젝트이다.
+ 기존 강화학습으로 구현된 4족 보행 정책 Baseline, 기존 정책에 온도를 패널티를 준 Thermal Feedback, 온도와 토크를 함께 패널티로 준 Thermal-Torque Feedback 정책을 Unitree Go2/MuJoCo 환경에서 비교하였다.
 <figure class="project-media">
   <img src="/study-media/unitree-go2-thermal-torque-feedback/01-title-compare.png" alt="Baseline, Thermal Feedback, Thermal-Torque Feedback의 보행 궤적 비교" loading="lazy" decoding="async" />
   <figcaption>같은 속도 명령에서 세 정책의 보행 궤적을 비교한 요약 화면</figcaption>
-</figure>
-
-<figure class="project-media project-media--video">
-  <video controls muted playsinline preload="metadata" poster="/study-media/unitree-go2-thermal-torque-feedback/05-gait-compare.png">
-    <source src="/study-media/unitree-go2-thermal-torque-feedback/videos/01-ppt-video.mp4" type="video/mp4" />
-    브라우저에서 동영상을 재생할 수 없습니다.
-  </video>
-  <figcaption>PPT 원본 보행 비교 영상</figcaption>
 </figure>
 
 ## 1. 서론
@@ -92,11 +84,6 @@ thumbnail: "/study-media/unitree-go2-thermal-torque-feedback/07-field-photo-2.pn
 </div>
 
 여기서 `r_locomotion`은 기본 보행 성능 보상, `r_thermal`은 온도 상승 억제 보상, `r_torque`는 과도한 토크 또는 부하 집중에 대한 패널티이다. Baseline은 `r_locomotion`만 사용하고, Thermal Feedback은 `r_thermal`을 추가하며, Thermal-Torque Feedback은 `r_thermal`과 `r_torque`를 함께 사용한다.
-
-<figure class="project-media">
-  <img src="/study-media/unitree-go2-thermal-torque-feedback/04-reward-hacking.png" alt="보상 해킹의 예시를 보여주는 도식" loading="lazy" decoding="async" />
-  <figcaption>온도만 단독 보상으로 둘 때 발생할 수 있는 reward hacking 예시</figcaption>
-</figure>
 
 ## 3. 데이터 수집 및 열-부하 해석 모델
 
