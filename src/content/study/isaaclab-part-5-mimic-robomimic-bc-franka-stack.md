@@ -15,8 +15,6 @@ thumbnail: "/study-media/isaaclab-bc-franka/franka-stack-official.jpg"
 
 ## 들어가며
 
-![ Isaac Lab Part 5  Mimic과 Robomimic으로 Franka Cube Stacking BC 학습하기](/study-media/isaaclab-part-5-mimic-robomimic-bc-franka-stack/1.png)
-
 로봇에게 작업을 학습시키는 방법은 보상 기반 강화학습만 있는 것이 아니다. 사람이 성공적으로 수행한 시연을 데이터로 삼아, 같은 상황에서 비슷한 행동을 내도록 policy를 학습시키는 **모방 학습(Imitation Learning)**도 중요한 접근이다.
 
 이번 글에서는 NVIDIA Isaac Lab의 공식 Franka cube stacking 예제를 기준으로, 행동 복제(Behavior Cloning, BC) 파이프라인을 직접 실행한 과정을 정리한다. Isaac Sim과 Isaac Lab 설치 과정은 제외하고, 아래 순서에 집중했다.
