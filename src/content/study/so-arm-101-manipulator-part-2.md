@@ -10,7 +10,7 @@ tags:
   - "Imitation Learning"
   - "ACT"
   - "Pick and Place"
-thumbnail: "/study-media/so-arm-101-manipulator-part-2/so2thumb.pn"
+thumbnail: "/study-media/so-arm-101-manipulator-part-2/so2thumb.png"
 ---
 
 LeRobot 기반 데이터 수집, 데이터 클리닝, ACT 학습, 실제 로봇 시연까지
