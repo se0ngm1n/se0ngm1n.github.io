@@ -10,11 +10,16 @@ tags:
   - "Imitation Learning"
   - "ACT"
   - "Pick and Place"
+thumbnail: ""
 ---
 
 LeRobot 기반 데이터 수집, 데이터 클리닝, ACT 학습, 실제 로봇 시연까지
 
 > 요약: SO-ARM101 리더-팔로워 시스템과 USB 카메라를 이용해 '3개 큐브 중 가장 가까운 큐브를 집어 박스에 넣는' 행동복제 데이터를 수집했다. 총 100 episode를 촬영한 뒤 품질이 나쁜 10, 11, 32번 episode를 제거했고, 97 episode / 72,643 frame으로 ACT policy를 학습했다. 20,000 step 학습은 약 31분 56초가 걸렸고, 학습한 1차 policy가 실제 로봇에서 Pick-and-Place를 수행하는 것까지 확인했다.
+
+<video controls preload="metadata" playsinline>
+  <source src="/study-media/so-arm-101-manipulator-part-2/image.mov" type="video/quicktime" />
+</video>
 
 ## 글의 목적
 
@@ -83,6 +88,10 @@ LeRobot 기반 데이터 수집, 데이터 클리닝, ACT 학습, 실제 로봇 
 
 ## 2. 데이터 수집: 100 episode 촬영
 
+<video controls preload="metadata" playsinline>
+  <source src="/study-media/so-arm-101-manipulator-part-2/image-2.mov" type="video/quicktime" />
+</video>
+
 행동복제에서 가장 중요한 것은 데이터 품질이다. policy는 사람이 수행한 행동을 그대로 따라 배우기 때문에, 실패한 행동이나 애매한 행동이 섞이면 나중에 로봇도 그 애매함을 학습한다. 그래서 이번 수집에서는 '성공하면 오른쪽 방향키, 실패하면 왼쪽 방향키' 규칙을 엄격하게 적용했다.
 
 강화학습처럼 보상 함수를 통해 시행착오를 반복하는 대신, 행동복제는 시연에서 관측한 `observation -> action` 대응을 지도학습한다. 이 때문에 수집 단계에서 잘못 저장한 action은 단순한 노이즈가 아니라 학습 목표 자체의 오류가 된다. 모델이나 학습 step을 늘리기 전에 시연의 일관성과 성공 기준을 먼저 관리해야 하는 이유다.
@@ -127,7 +136,7 @@ lerobot-record \
 
 > 중요한 점은 '성공 데이터만 저장한다'가 아니라, 나중에 policy가 보고 따라 해도 괜찮은 행동만 저장한다는 것이다. 행동복제에서 데이터는 곧 정답지다.
 
-## 3. 데이터 검증과 품질 관리
+## 3. 데이터 검증과 품질 체크
 
 수집 후에는 실제 데이터셋이 제대로 저장됐는지 확인했다. LeRobot v3 포맷에서는 meta/info.json, data parquet, video mp4, episode metadata가 생성된다.
 
@@ -148,18 +157,6 @@ print("total_frames:", info["total_frames"])
 print("fps:", info["fps"])
 print("features:", info["features"].keys())
 PYCHECK
-```
-
-### 비디오 확인
-
-처음에는 AV1 codec 영상이 VLC에서 검정 화면으로 보이는 문제가 있었다. 데이터가 깨진 것이 아니라 player의 hardware decoding 문제였고, ffplay에서 libdav1d를 직접 지정하니 정상적으로 재생됐다. 이후 수집에서는 h264 encoder를 사용했다.
-
-```bash
-VIDEO=/home/fugu/lerobot_datasets/so101_cube3_pick_place_v1/videos/observation.images.front/chunk-000/file-000.mp4
-ffplay "$VIDEO"
-
-# AV1 영상이 검정 화면으로 보이면 아래처럼 소프트웨어 AV1 decoder를 지정
-ffplay -vcodec libdav1d "$VIDEO"
 ```
 
 ## 4. 나쁜 episode 삭제 및 clean dataset 생성
