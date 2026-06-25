@@ -10,7 +10,7 @@ tags:
   - "Imitation Learning"
   - "ACT"
   - "Pick and Place"
-thumbnail: ""
+thumbnail: "/study-media/so-arm-101-manipulator-part-2/so2thumb.pn"
 ---
 
 LeRobot 기반 데이터 수집, 데이터 클리닝, ACT 학습, 실제 로봇 시연까지
@@ -228,6 +228,8 @@ PYCHECK
 
 ### ACT 학습 명령어
 
+![ SO-ARM 101 Manipulator Project Part 2  학습 데이터 수집, Behavior Cloning 1차 테스트](/study-media/so-arm-101-manipulator-part-2/image-2.png)
+
 ```bash
 HF_LEROBOT_HOME=/home/fugu/lerobot_datasets lerobot-train \
   --dataset.root=/home/fugu/lerobot_datasets/so101_cube3_pick_place_v1_clean \
@@ -242,6 +244,8 @@ HF_LEROBOT_HOME=/home/fugu/lerobot_datasets lerobot-train \
 ```
 
 ### 학습 결과
+
+![ SO-ARM 101 Manipulator Project Part 2  학습 데이터 수집, Behavior Cloning 1차 테스트](/study-media/so-arm-101-manipulator-part-2/image.png)
 
 ```text
 Checkpoint policy after step 20000
