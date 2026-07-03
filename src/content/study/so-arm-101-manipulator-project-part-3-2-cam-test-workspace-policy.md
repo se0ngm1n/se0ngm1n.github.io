@@ -27,4 +27,8 @@ Wrist CAM의 시야각이 생각보다 좁아서 하나만으로는 넓은 영�
 
 다음과 같이 Overview CAM 세팅을 하였다.
 
-처음에 70개의 데이터 수집을 했고, 이전 1CAM 환경
+처음에 70개의 데이터 수집을 했고, 이전 1CAM, 400데이터 환경보다 훨씬 좋은 성능을 보여줌을 확인하였다.
+
+<video controls preload="metadata" playsinline>
+  <source src="/study-media/so-arm-101-manipulator-project-part-3-2-cam-test-workspace-policy/image.mov" type="video/quicktime" />
+</video>
