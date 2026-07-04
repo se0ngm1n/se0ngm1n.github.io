@@ -10,7 +10,7 @@ tags:
   - "Imitation Learning"
   - "ACT"
   - "Pick and Place"
-thumbnail: ""
+thumbnail: "/study-media/so-arm-101-manipulator-project-part-3-2-cam-test-workspace-policy/2026-07-04-1-23-47.png"
 ---
 
 ##내용 요약
