@@ -37,23 +37,23 @@ Wrist CAM의 시야각이 생각보다 좁아서 하나만으로는 넓은 영�
 
 (이곳에 작성)
 
-##3 Test Workspace 지정
+## 3 Test Workspace 지정
 앞으로 체계화된 성능 평가를 위해 Test Wrokspace를 지정하였고, 세부적인 평가 방법은 고도화 해나갈 예정이다.
 
-###Wrist CAM 좌우 가시 영역 확인
+### Wrist CAM 좌우 가시 영역 확인
 ![ SO-ARM 101 Manipulator Project Part 3  2-CAM 환경 구축, Test Workspace 세팅, 데이터 수집과 Policy에 대한 고민](/study-media/so-arm-101-manipulator-project-part-3-2-cam-test-workspace-policy/2026-07-04-1-23-01.png)
 Wrist CAM에 큐브가 보이지 않는 좌우 한계선을 정확히 측정하였다. 이 과정에서 카메라의 Fish eye 현상이 생각보다 심하다는 것을 알게 되었다. Check Board Calibration을 진행할까도 고민해보았지만, 우리가 큐브의 정확한 위치 좌표를 뽑을 예정은 아니므로 일단 스킵하도록한다.
 
-###Wrist CAM 상단 가시 한계선 확인
+### Wrist CAM 상단 가시 한계선 확인
 ![ SO-ARM 101 Manipulator Project Part 3  2-CAM 환경 구축, Test Workspace 세팅, 데이터 수집과 Policy에 대한 고민](/study-media/so-arm-101-manipulator-project-part-3-2-cam-test-workspace-policy/2026-07-04-1-23-08.png)
 
 좌우 가시 영역과, 상단 가시 한계선을 연필로 옅게 책상에 표시해 두었다.
 
-###Overview CAM 가시 영역 확인
+### Overview CAM 가시 영역 확인
 ![ SO-ARM 101 Manipulator Project Part 3  2-CAM 환경 구축, Test Workspace 세팅, 데이터 수집과 Policy에 대한 고민](/study-media/so-arm-101-manipulator-project-part-3-2-cam-test-workspace-policy/2026-07-04-1-23-16.png)
 Overview CAM이 보았을 때 큐브가 통에 가려지는 부분과 그림자에 의해 가려지는 영역이다. 어차피 로봇의 Wrist CAM 과 박스가 부딫혀 접근할 수 없는 영역이므로 추가적인 표시는 하지 않았다.
 
-###Test Wrokspace 정하기
+### Test Wrokspace 정하기
 ![ SO-ARM 101 Manipulator Project Part 3  2-CAM 환경 구축, Test Workspace 세팅, 데이터 수집과 Policy에 대한 고민](/study-media/so-arm-101-manipulator-project-part-3-2-cam-test-workspace-policy/2026-07-04-1-23-25.png)
 Wrist CAM 과 Overview CAM의 가시 영역을 합치면 다음과 같다.
 
