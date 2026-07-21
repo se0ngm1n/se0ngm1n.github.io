@@ -5,7 +5,7 @@ import { profile } from '../data/profile';
 
 const hasResume = profile.resume.available && profile.resume.href;
 const roleLines = profile.role.split(' · ');
-const affiliationLines = profile.affiliations ?? [profile.university];
+const affiliationLines = profile.affiliations?.length ? profile.affiliations : [profile.university];
 const hasCertifications = profile.certifications.length > 0;
 const hasLanguages = profile.languages.length > 0;
 ---

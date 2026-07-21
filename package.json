@@ -9,6 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "content": "python3 tools/content_editor.py",
+    "content:check": "python3 tools/content_editor.py --check",
     "astro": "astro"
   },
   "dependencies": {
