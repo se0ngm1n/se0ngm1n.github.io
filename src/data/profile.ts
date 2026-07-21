@@ -1,7 +1,7 @@
 export const profile = {
   "homeQuote": "日新又日新",
   "name": "이성민",
-  "englishName": "Alex Lee",
+  "englishName": "Seongmin Lee",
   "role": "RLWRLD Robotics Deployment Intern · Mechanical Engineering Student",
   "university": "Konkuk University (Senior)",
   "affiliations": [
