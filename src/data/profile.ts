@@ -34,10 +34,7 @@ export const profile = {
     "role": "Robotics Deployment Internship",
     "period": "Jul 27, 2026 – Oct 26, 2026"
   },
-  "training": [
-    "2026 H-모빌리티 클래스 로보틱스 Track",
-    "2026 Google AI Professional Certificate"
-  ],
+  "training": [],
   "awards": [
     "제5회 소방안전 빅데이터 플랫폼 활용 및 아이디어 경진대회 입선(장려상)",
     "2025 건국대학교 캡스톤디자인 경진대회 동상(4위)",
@@ -50,6 +47,12 @@ export const profile = {
     "2026 AI ROOKIE 경진대회 100/721 (본선 진행중)"
   ],
   "certifications": [
+    {
+      "name": "2026 H-모빌리티 클래스 로보틱스 Track"
+    },
+    {
+      "name": "2026 Google AI Professional Certificate"
+    },
     {
       "name": "대한적십자사 인명 구조 요원"
     },

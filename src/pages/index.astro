@@ -89,17 +89,8 @@ const hasLanguages = profile.languages.length > 0;
             <span>{profile.education.major}</span>
             <p>{profile.education.degree} | {profile.education.period}</p>
           </div>
-          <div class="training-block">
-            <h3>Ongoing Training</h3>
-            <ul class="training-list">
-              {profile.training.map((item) => <li>{item}</li>)}
-            </ul>
-          </div>
-        </section>
-
-        <section class="section-card info-section">
-          <h2 class="section-title">Internship</h2>
           <div class="internship-block">
+            <h3>Internship</h3>
             <strong>{profile.internship.company}</strong>
             <span>{profile.internship.role}</span>
             <p>{profile.internship.period}</p>
@@ -346,34 +337,20 @@ const hasLanguages = profile.languages.length > 0;
   }
 
   .internship-block {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
     display: grid;
     gap: 4px;
     word-break: keep-all;
   }
 
-  .training-block {
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--line);
-    display: grid;
-    gap: 8px;
-  }
-
-  .training-block h3 {
+  .internship-block h3 {
     color: var(--text);
     font-size: 0.76rem;
     font-weight: 800;
     letter-spacing: 0;
     text-transform: uppercase;
-  }
-
-  .training-list {
-    display: grid;
-    gap: 6px;
-    padding-left: 18px;
-    color: var(--text);
-    font-size: 0.9rem;
-    word-break: keep-all;
   }
 
   .award-list {
