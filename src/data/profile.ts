@@ -2,7 +2,7 @@ export const profile = {
   "homeQuote": "日新又日新",
   "name": "이성민",
   "englishName": "Alex Lee",
-  "role": "RLWRLD Robitics Deployment Intern · Robotics / Physical AI",
+  "role": "RLWRLD Robitics Deployment Intern · Mechanical Engineering Student",
   "university": "Konkuk University (Senior) RLWRLD (Intern)",
   "department": "Mechanical & Aerospace Engineering",
   "location": "Seoul, Republic of Korea",
