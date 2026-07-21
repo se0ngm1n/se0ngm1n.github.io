@@ -3,7 +3,7 @@ export const profile = {
   "name": "이성민",
   "englishName": "Alex Lee",
   "role": "Mechanical Engineering Student · Robotics / Physical AI",
-  "university": "Konkuk University (Senior), RLWRLD Robitics Deployment Intern",
+  "university": "Konkuk University (Senior) · RLWRLD Robitics Deployment Intern",
   "department": "Mechanical & Aerospace Engineering",
   "location": "Seoul, Republic of Korea",
   "email": "lsm010711@naver.com",
