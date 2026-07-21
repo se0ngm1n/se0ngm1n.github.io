@@ -1,7 +1,7 @@
 export const profile = {
   "homeQuote": "日新又日新",
   "name": "이성민",
-  "englishName": "Seongmin Lee",
+  "englishName": "Alex Lee",
   "role": "Mechanical Engineering Student · Robotics / Physical AI",
   "university": "Konkuk University (Senior), RLWRLD Robitics Deployment Intern",
   "department": "Mechanical & Aerospace Engineering",
@@ -16,7 +16,7 @@ export const profile = {
     "alt": "이성민 프로필 사진"
   },
   "resume": {
-    "available": false,
+    "available": true,
     "href": ""
   },
   "education": {
