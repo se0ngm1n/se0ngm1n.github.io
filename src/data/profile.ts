@@ -3,7 +3,7 @@ export const profile = {
   "name": "이성민",
   "englishName": "Seongmin Lee",
   "role": "Mechanical Engineering Student · Robotics / Physical AI",
-  "university": "Konkuk University (Senior)",
+  "university": "Konkuk University (Senior), RLWRLD Robitics Deployment Intern",
   "department": "Mechanical & Aerospace Engineering",
   "location": "Seoul, Republic of Korea",
   "email": "lsm010711@naver.com",
@@ -37,6 +37,7 @@ export const profile = {
     "한국공과대학장협의회 (KEDC) 한국공과대학장협의회장상",
     "DACON 스마트 창고 출고 지연 예측 AI 경진대회 607팀 중 33등, 상위 5.4%",
     "2026 ICT 융합프로젝트 공모전 대상",
+    "2026 Future X Capstone Design Challenge 대상",
     "2026 AI ROOKIE 경진대회 100/721 (본선 진행중)"
   ],
   "certifications": [
