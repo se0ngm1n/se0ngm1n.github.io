@@ -5,6 +5,7 @@ import { profile } from '../data/profile';
 
 const hasResume = profile.resume.available && profile.resume.href;
 const roleLines = profile.role.split(' · ');
+const affiliationLines = profile.affiliations ?? [profile.university];
 const hasCertifications = profile.certifications.length > 0;
 const hasLanguages = profile.languages.length > 0;
 ---
@@ -40,7 +41,9 @@ const hasLanguages = profile.languages.length > 0;
         <dl class="contact-list">
           <div>
             <dt>Affiliation</dt>
-            <dd>{profile.university}</dd>
+            <dd class="affiliation-list">
+              {affiliationLines.map((affiliation) => <span>{affiliation}</span>)}
+            </dd>
           </div>
           <div>
             <dt>Location</dt>
@@ -91,6 +94,15 @@ const hasLanguages = profile.languages.length > 0;
             <ul class="training-list">
               {profile.training.map((item) => <li>{item}</li>)}
             </ul>
+          </div>
+        </section>
+
+        <section class="section-card info-section">
+          <h2 class="section-title">Internship</h2>
+          <div class="internship-block">
+            <strong>{profile.internship.company}</strong>
+            <span>{profile.internship.role}</span>
+            <p>{profile.internship.period}</p>
           </div>
         </section>
 
@@ -264,6 +276,15 @@ const hasLanguages = profile.languages.length > 0;
     word-break: break-word;
   }
 
+  .affiliation-list {
+    display: grid;
+    gap: 2px;
+  }
+
+  .affiliation-list span {
+    display: block;
+  }
+
   .contact-list a:hover {
     color: var(--accent-2);
   }
@@ -311,14 +332,23 @@ const hasLanguages = profile.languages.length > 0;
     word-break: keep-all;
   }
 
-  .education-block strong {
+  .education-block strong,
+  .internship-block strong {
     font-size: 1.28rem;
     letter-spacing: 0;
   }
 
   .education-block span,
-  .education-block p {
+  .education-block p,
+  .internship-block span,
+  .internship-block p {
     color: var(--muted);
+  }
+
+  .internship-block {
+    display: grid;
+    gap: 4px;
+    word-break: keep-all;
   }
 
   .training-block {

@@ -2,8 +2,12 @@ export const profile = {
   "homeQuote": "日新又日新",
   "name": "이성민",
   "englishName": "Alex Lee",
-  "role": "RLWRLD Robitics Deployment Intern · Mechanical Engineering Student",
-  "university": "Konkuk University (Senior) RLWRLD (Intern)",
+  "role": "RLWRLD Robotics Deployment Intern · Mechanical Engineering Student",
+  "university": "Konkuk University (Senior)",
+  "affiliations": [
+    "Konkuk University (Senior)",
+    "RLWRLD (Intern)"
+  ],
   "department": "Mechanical & Aerospace Engineering",
   "location": "Seoul, Republic of Korea",
   "email": "lsm010711@naver.com",
@@ -24,6 +28,11 @@ export const profile = {
     "major": "Mechanical & Aerospace Engineering",
     "degree": "B.S. Candidate",
     "period": "Mar. 2021 - Expected Mar. 2027"
+  },
+  "internship": {
+    "company": "RLWRLD",
+    "role": "Robotics Deployment 직무 인턴",
+    "period": "2026년 7월 말 - 2026년 10월 말"
   },
   "training": [
     "2026 H-모빌리티 클래스 로보틱스 Track",
