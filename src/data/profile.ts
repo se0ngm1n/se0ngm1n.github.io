@@ -31,7 +31,7 @@ export const profile = {
   },
   "internship": {
     "company": "RLWRLD",
-    "role": "Robotics Deployment 직무 인턴",
+    "role": "Robotics Deployment Internship",
     "period": "2026년 7월 말 - 2026년 10월 말"
   },
   "training": [
